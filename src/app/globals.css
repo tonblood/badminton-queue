@@ -5,6 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --base-color-font: #636363;
+  --primary-color: #A83B24;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +19,46 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-prompt);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+h1 {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 40px;
+  padding: 20px;
+}
+
+.container-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 50px;
+}
+
+p {
+  color: var(--base-color-font);
+}
+
+button {
+  margin: 10px;
+  width:100%;
+}
+
+.button-primary {
+  color: var(--background);
+  background-color: var(--primary-color);
+}
+
+.button-default {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
