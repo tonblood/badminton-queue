@@ -3,8 +3,7 @@ import "./globals.css";
 import { Prompt } from 'next/font/google'
 import { Providers } from "./Provider";
 
-// If loading a variable font, you don't need to specify the font weight
-export const prompt = Prompt({
+export const prompt_font = Prompt({
   subsets: ['thai'],
   display: 'swap',
   variable: '--font-prompt',
@@ -23,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${prompt.variable} antialiased `}
+        className={`${prompt_font.variable} antialiased `}
       >
         <Providers>
           {children}
