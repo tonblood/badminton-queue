@@ -3,11 +3,7 @@ import "./globals.css";
 import { Prompt } from 'next/font/google'
 import { Providers } from "./Provider";
 
-<<<<<<< HEAD
 const prompt_font = Prompt({
-=======
-export const prompt_font = Prompt({
->>>>>>> 98a880cc7fa3c1996d87d11bd81b7274ae124852
   subsets: ['thai'],
   display: 'swap',
   variable: '--font-prompt',
