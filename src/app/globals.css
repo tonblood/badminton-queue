@@ -3,23 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: url('../image/background.png');
   --foreground: #171717;
   --base-color-font: #636363;
   --primary-color: #A83B24;
+  --white-base: #ededed;
+  --light-orange: #F2E2DE;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: url('../image/background.png');
     --foreground: #ededed;
   }
 }
 
+html, body {
+  height:100%;
+} 
+
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-image: var(--background);
   font-family: var(--font-prompt);
+  background-size: auto 100%;
 }
 
 @layer utilities {
@@ -41,7 +48,7 @@ h1 {
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin: 50px;
+  padding: 100px 25px;
 }
 
 p {
@@ -54,11 +61,22 @@ button {
 }
 
 .button-primary {
-  color: var(--background);
+  color: var(--white-base);
   background-color: var(--primary-color);
 }
 
 .button-default {
   border-color: var(--primary-color);
   color: var(--primary-color);
+}
+
+.container-login-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: var(--light-orange);
+  color: var(--primary-color);
+  padding-bottom: 300px;
 }
