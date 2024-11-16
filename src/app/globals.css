@@ -9,6 +9,8 @@
   --primary-color: #A83B24;
   --white-base: #ededed;
   --light-orange: #F2E2DE;
+  --super-white: #fff;
+  --orange-header-background: #CC5A3F;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,7 +26,6 @@ html, body {
 
 body {
   color: var(--foreground);
-  background-image: var(--background);
   font-family: var(--font-prompt);
   background-size: auto 100%;
 }
@@ -79,4 +80,24 @@ button {
   background-color: var(--light-orange);
   color: var(--primary-color);
   padding-bottom: 300px;
+}
+
+.header-containner {
+  background-color: var(--orange-header-background);
+  border-radius: 0 0 30px 30px;
+  color: var(--super-white);
+}
+
+.container-playing-team {
+  padding: 10px;
+  border-radius: 7px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.awaiting-team-containner {
+  padding: 10px;
+  border-radius: 7px;
+  background-color: var(--super-white);
+  height: 450px;
+  overflow-y: auto;
 }
