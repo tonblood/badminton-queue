@@ -10,11 +10,7 @@ import versusImage from '../../../image/versus-image.png'
 import { NowPlayer } from './model'
 import { RiContactsBook3Line } from 'react-icons/ri'
 
-type Param = {
-    id?: string
-}
-
-const Homepage = (props: Param) => {
+const Homepage = () => {
     const { id } = useParams()
     const [userName, setUserName] = useState<any>()
     let userInfo = JSON.parse(sessionStorage.getItem('userInfo') || '')
