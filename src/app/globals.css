@@ -98,6 +98,6 @@ button {
   padding: 10px;
   border-radius: 7px;
   background-color: var(--super-white);
-  height: 450px;
+  height: 370px;
   overflow-y: auto;
 }
