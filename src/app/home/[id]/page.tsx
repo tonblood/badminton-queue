@@ -86,12 +86,14 @@ const Homepage = () => {
                 setTeamTwoPlaying(awaitingTeamList[0])
                 setIsLoadingTwo(true)
                 setTimeout(() => setIsLoadingTwo(false), 1000)
+                sessionStorage.setItem('teamOne', JSON.stringify(teamOnePlaying))
                 sessionStorage.setItem('teamTwo', JSON.stringify(awaitingTeamList[0]))
             } else if (id === teamTwoPlaying?.id) {
                 teamTwoPlaying.winCount = newWinCount
                 setTeamOnePlaying(awaitingTeamList[0])
                 setIsLoadingOne(true)
                 setTimeout(() => setIsLoadingOne(false), 1000)
+                sessionStorage.setItem('teamTwo', JSON.stringify(teamTwoPlaying))
                 sessionStorage.setItem('teamOne', JSON.stringify(awaitingTeamList[0]))
             }
             awaitingTeamList.shift()
@@ -123,9 +125,9 @@ const Homepage = () => {
     return (
         <>{isLogin ? <div style={{ backgroundColor: '#fbfbfb' }}>
         <div className="header-containner grid grid-cols-3">
-            <div className="grid grid-gaps-4 grid-rows-2 p-5">
-                <span className='content-end'>Course</span>
-                <span className='content-start'>สนามที่ <span className='ml-3' style={{ color: '#fff', fontSize: 28, fontWeight: 'bold' }}>1</span></span>
+            <div className="grid grid-gaps-4 grid-rows-2 px-5 py-2">
+                <h2 className='content-end'>Course</h2>
+                <h3 className='content-start'>สนามที่ <span className='ml-3' style={{ color: '#fff', fontSize: 28, fontWeight: 'bold' }}>1</span></h3>
             </div>
             <div className="content-end justify-self-center">
                 {/* <Button isIconOnly color="primary" aria-label="Like" variant='light'>
@@ -163,12 +165,12 @@ const Homepage = () => {
                                 <p>{idx + 1}</p>
                             </div>
                             <div className='basis-5/6'>
-                                <p>ทีมของ</p>
-                                <p>{it.firstPlayer} - {it.secondPlayer}</p>
+                                <p>ทีมของ : </p>
+                                <h4>{it.firstPlayer} - {it.secondPlayer}</h4>
                             </div>
                             <div className='basis-4 grid content-center' style={{ textAlign: 'end' }}>
                                 <Button isIconOnly variant='light' onClick={() => handleDeleteTeam(it.id)}>
-                                    <MdDeleteOutline />
+                                    <MdDeleteOutline fontSize={24}/>
                                 </Button>
                             </div>
                         </div>
