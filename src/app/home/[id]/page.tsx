@@ -105,7 +105,6 @@ const Homepage = () => {
                 sessionStorage.setItem('teamTwo', JSON.stringify(teamTwoPlaying))
                 sessionStorage.setItem('teamOne', JSON.stringify(awaitingTeamList[0]))
             }
-            sessionStorage.setItem('awaitingTeam', JSON.stringify(awaitingTeamList))
         } else {
             setTeamOnePlaying(awaitingTeamList[0])
             setTeamTwoPlaying(awaitingTeamList[1])
@@ -120,12 +119,13 @@ const Homepage = () => {
             setTimeout(() => setIsLoadingTwo(false), 1000)
             sessionStorage.setItem('teamOne', JSON.stringify(awaitingTeamList[0]))
             sessionStorage.setItem('teamTwo', JSON.stringify(awaitingTeamList[1]))
-            sessionStorage.setItem('awaitingTeam', JSON.stringify(awaitingTeamList))
+            
         }
         awaitingTeamList.map((it) => {
             it.winCount = 0
             return it
         })
+        sessionStorage.setItem('awaitingTeam', JSON.stringify(awaitingTeamList))
         setIsLoadingTeamList(true)
         setTimeout(() => setIsLoadingTeamList(false), 1000)
     }
