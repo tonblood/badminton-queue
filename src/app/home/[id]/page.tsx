@@ -30,12 +30,11 @@ const Homepage = () => {
         setIsLoadingOne(true)
         setIsLoadingTwo(true)
         setIsLoadingTeamList(true)
-        if (sessionStorage.getItem('teamOne') !== null) {
+        if (sessionStorage.getItem('teamOne') !== null && sessionStorage.getItem('teamOne') !== 'undefined') {
             const tempdata = JSON.parse(sessionStorage.getItem('teamOne')!!)
-            console.log(tempdata);
             setTeamOnePlaying(tempdata)
         }
-        if (sessionStorage.getItem('teamTwo') !== null) {
+        if (sessionStorage.getItem('teamTwo') !== null && sessionStorage.getItem('teamTwo') !== 'undefined') {
             setTeamTwoPlaying(JSON.parse(sessionStorage.getItem('teamTwo') || ''))
         }
         if (sessionStorage.getItem('awaitingTeam') !== null) {
@@ -83,49 +82,48 @@ const Homepage = () => {
         if (newWinCount % 2) {
             const recentTeam = awaitingTeamList.shift()
             if (id === teamOnePlaying?.id) {
-                console.log('one win');
                 if (teamTwoPlaying) {
+                    teamTwoPlaying.winCount = 0
                     setAwaitingTeamList([...awaitingTeamList, teamTwoPlaying])
+                    sessionStorage.setItem('awaitingTeam', JSON.stringify([...awaitingTeamList, teamTwoPlaying]))
                 }
                 teamOnePlaying.winCount = newWinCount
                 setTeamTwoPlaying(recentTeam)
                 setIsLoadingTwo(true)
                 setTimeout(() => setIsLoadingTwo(false), 1000)
                 sessionStorage.setItem('teamOne', JSON.stringify(teamOnePlaying))
-                sessionStorage.setItem('teamTwo', JSON.stringify(awaitingTeamList[0]))
+                sessionStorage.setItem('teamTwo', JSON.stringify(recentTeam))
             } else if (id === teamTwoPlaying?.id) {
-                console.log('two win');
                 if (teamOnePlaying) {
+                    teamOnePlaying.winCount = 0
                     setAwaitingTeamList([...awaitingTeamList, teamOnePlaying])
+                    sessionStorage.setItem('awaitingTeam', JSON.stringify([...awaitingTeamList, teamOnePlaying]))
                 }
                 teamTwoPlaying.winCount = newWinCount
                 setTeamOnePlaying(recentTeam)
                 setIsLoadingOne(true)
                 setTimeout(() => setIsLoadingOne(false), 1000)
                 sessionStorage.setItem('teamTwo', JSON.stringify(teamTwoPlaying))
-                sessionStorage.setItem('teamOne', JSON.stringify(awaitingTeamList[0]))
+                sessionStorage.setItem('teamOne', JSON.stringify(recentTeam))
             }
         } else {
-            setTeamOnePlaying(awaitingTeamList[0])
-            setTeamTwoPlaying(awaitingTeamList[1])
-            awaitingTeamList.shift()
-            awaitingTeamList.shift()
+            const teamone = awaitingTeamList.shift()
+            const teamtwo = awaitingTeamList.shift()
             if (teamOnePlaying && teamTwoPlaying) {
-                setAwaitingTeamList(teamOnePlaying?.id === id ? [...awaitingTeamList,teamTwoPlaying, teamOnePlaying] : [...awaitingTeamList,teamTwoPlaying, teamOnePlaying])
+                teamOnePlaying.winCount = 0
+                teamTwoPlaying.winCount = 0
+                setAwaitingTeamList(teamOnePlaying?.id === id ? [...awaitingTeamList, teamTwoPlaying, teamOnePlaying] : [...awaitingTeamList, teamOnePlaying, teamTwoPlaying])
             }
+            setTeamOnePlaying(teamone)
+            setTeamTwoPlaying(teamtwo)
             setIsLoadingOne(true)
             setIsLoadingTwo(true)
             setTimeout(() => setIsLoadingOne(false), 1000)
             setTimeout(() => setIsLoadingTwo(false), 1000)
-            sessionStorage.setItem('teamOne', JSON.stringify(awaitingTeamList[0]))
-            sessionStorage.setItem('teamTwo', JSON.stringify(awaitingTeamList[1]))
-            
+            sessionStorage.setItem('teamOne', JSON.stringify(teamone))
+            sessionStorage.setItem('teamTwo', JSON.stringify(teamtwo))
+            sessionStorage.setItem('awaitingTeam', JSON.stringify(teamOnePlaying?.id === id ? [...awaitingTeamList, teamTwoPlaying, teamOnePlaying] : [...awaitingTeamList, teamOnePlaying, teamTwoPlaying]))
         }
-        awaitingTeamList.map((it) => {
-            it.winCount = 0
-            return it
-        })
-        sessionStorage.setItem('awaitingTeam', JSON.stringify(awaitingTeamList))
         setIsLoadingTeamList(true)
         setTimeout(() => setIsLoadingTeamList(false), 1000)
     }
