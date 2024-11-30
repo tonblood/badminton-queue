@@ -1,21 +1,18 @@
 'use client'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import badmintonInfo from '../../../image/badminton-info.png'
+import badmintonInfo from '../../image/badminton-info.png'
 import Image from 'next/image'
-import { Accordion, AccordionItem, Button, Card, Divider, Input, Modal, ModalContent, Progress, Spinner } from '@nextui-org/react'
-import { BiDownArrow } from 'react-icons/bi'
+import { Button, Divider, Input, Modal, ModalContent, Spinner } from '@nextui-org/react'
 import TeamPlayNow from './TeamPlayNow'
-import versusImage from '../../../image/versus-image.png'
+import versusImage from '../../image/versus-image.png'
 import { ListAllPlayer, PlayerTeam } from './model'
 import { RiContactsBook3Line } from 'react-icons/ri'
-import { makeid } from '@/app/component/makeId'
 import { MdDeleteOutline } from 'react-icons/md'
-import emptyPlayerList from '../../../image/emptyPlayerList.png'
+import emptyPlayerList from '../../image/emptyPlayerList.png'
 import { AddNewTeam, DeleteAllData, DeleteTeam, GetdataListQueues, UpdateTeamWin } from './service'
 
 const Homepage = () => {
-    const isLogin = JSON.parse(sessionStorage.getItem('userInfo')|| '')
     const [teamOnePlaying, setTeamOnePlaying] = useState<PlayerTeam>()
     const [teamTwoPlaying, setTeamTwoPlaying] = useState<PlayerTeam>()
     const [awaitingTeamList, setAwaitingTeamList] = useState<PlayerTeam[]>([])
@@ -23,6 +20,7 @@ const Homepage = () => {
     const [userOne, setUserOne] = useState<string>('')
     const [userTwo, setUserTwo] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const isLogin = sessionStorage.userInfo ? JSON.parse(sessionStorage.userInfo) : undefined
     const router = useRouter()
 
     useEffect(() => {
@@ -33,7 +31,7 @@ const Homepage = () => {
             setAwaitingTeamList(res.teamQueueList || [])
         }).finally(() => setIsLoading(false))
     }, [])
-
+    
     // const getDataList = () => {
     //     GetdataListQueues().then((res: ListAllPlayer) => {
     //         setTeamOnePlaying(res.teamOnePlay)
@@ -93,7 +91,7 @@ const Homepage = () => {
     }
 
     return (
-        <>{isLogin ? <div style={{ backgroundColor: '#fbfbfb' }}>
+        <> {isLogin ? <div style={{ backgroundColor: '#fbfbfb' }}>
             <div className="header-containner grid grid-cols-3">
                 <div className="grid grid-gaps-4 grid-rows-2 px-5 py-2">
                     <h2 className='content-end'>Course</h2>
@@ -206,7 +204,7 @@ const Homepage = () => {
 
                 </ModalContent>
             </Modal>
-        </div> : router.push('/')}</>
+        </div> : router.push('/') }</>
     )
 }
 

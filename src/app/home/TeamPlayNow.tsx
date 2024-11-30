@@ -1,6 +1,6 @@
 import { Button } from '@nextui-org/react'
 import React from 'react'
-import trophy from '../../../image/trophy.png'
+import trophy from '../../image/trophy.png'
 import Image from 'next/image'
 import { PlayerTeam } from './model'
 
