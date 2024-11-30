@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Prompt } from 'next/font/google'
 import { Providers } from "./Provider";
+import 'dotenv/config'
+import { NotificationProvider } from "./context/NotificationContext";
 
 const prompt_font = Prompt({
   subsets: ['thai'],
@@ -27,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${prompt_font.variable} antialiased `}
       >
-        <Providers>
+          <Providers>
           {children}
         </Providers>
       </body>

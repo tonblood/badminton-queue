@@ -19,11 +19,12 @@ export default function Home() {
     const [isPasswordVisible, setisPasswordVisible] = useState<boolean>(false)
     const [userName, setUserName] = useState<string>()
     const [dataUser, setDataUser] = useState<any>()
+    const userInfo = sessionStorage.getItem('userInfo')
     const router = useRouter()
 
     useEffect(() => {
-        if(sessionStorage.getItem('userInfo')) {
-            setDataUser(JSON.parse(sessionStorage.getItem('userInfo') || ''))
+        if(userInfo) {
+            setDataUser(JSON.parse(userInfo))
         }
     },[])
 

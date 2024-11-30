@@ -8,6 +8,7 @@ type Props = {
     teamInfo?: PlayerTeam
     handleClickWin: Function
     disabledButton?: boolean
+    isVisible: boolean
 }
 
 const TeamPlayNow = (props: Props) => {
@@ -19,7 +20,7 @@ const TeamPlayNow = (props: Props) => {
                     <h4>{props.teamInfo.firstPlayer} - {props.teamInfo.secondPlayer}</h4>
                 </div>
                 <div className="basis-1/5" style={{ textAlign: 'end' }}>
-                    <Button variant='bordered'
+                    {props.isVisible ? <Button variant='bordered'
                         size='sm'
                         startContent={<Image src={trophy} alt='trophy' />}
                         onClick={() => props.handleClickWin(props.teamInfo?.id, props.teamInfo?.winCount)}
@@ -28,7 +29,7 @@ const TeamPlayNow = (props: Props) => {
                         isDisabled={props.disabledButton}
                     >
                         ({props.teamInfo.winCount || 0}/2)
-                    </Button>
+                    </Button> : null}
                 </div>
             </div>
         </> : <div className='m-3'><p style={{ textAlign: 'center' }}>รอทีมลงแข่ง...</p></div>}
