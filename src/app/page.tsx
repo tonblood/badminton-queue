@@ -31,7 +31,7 @@ export default function Home() {
     const handleLogin = () => {
         if(userName?.trim) {
             const uuid = makeid(4)
-            router.push(`/home/${uuid}`)
+            router.push(`/home`)
             const userInfo = {
                 name: userName,
                 uuid: uuid
@@ -105,11 +105,9 @@ export default function Home() {
                         
                         <br />
                     </div>
-
                 </ModalContent>
             </Modal>
         </div>
     </>
-        
     );
 }
