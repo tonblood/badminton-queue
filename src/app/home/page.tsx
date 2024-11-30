@@ -20,7 +20,7 @@ const Homepage = () => {
     const [userOne, setUserOne] = useState<string>('')
     const [userTwo, setUserTwo] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const isLogin = sessionStorage.userInfo ? JSON.parse(sessionStorage.userInfo) : undefined
+    const isLogin = typeof window !== 'undefined' ? JSON.parse(sessionStorage.userInfo) : undefined
     const router = useRouter()
 
     useEffect(() => {
