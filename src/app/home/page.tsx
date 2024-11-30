@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import badmintonInfo from '../../image/badminton-info.png'
@@ -20,7 +20,7 @@ const Homepage = () => {
     const [userOne, setUserOne] = useState<string>('')
     const [userTwo, setUserTwo] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const isLogin = typeof window !== 'undefined' ? JSON.parse(sessionStorage.userInfo) : undefined
+    const isLogin = typeof window !== "undefined" ? JSON.parse(window.sessionStorage.userInfo) : undefined
     const router = useRouter()
 
     useEffect(() => {

@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 import Image from "next/image";
 import badminton from '../image/badminton.png';
 import { Button } from "@nextui-org/button";
@@ -13,20 +12,11 @@ import { Checkbox } from "@nextui-org/checkbox";
 import { useRouter } from "next/navigation";
 import { makeid } from "./component/makeId";
 
-
 export default function Home() {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
     const [isPasswordVisible, setisPasswordVisible] = useState<boolean>(false)
     const [userName, setUserName] = useState<string>()
-    const [dataUser, setDataUser] = useState<any>()
-    const userInfo = sessionStorage.getItem('userInfo')
     const router = useRouter()
-
-    useEffect(() => {
-        if(userInfo) {
-            setDataUser(JSON.parse(userInfo))
-        }
-    },[])
 
     const handleLogin = () => {
         if(userName?.trim) {
@@ -38,10 +28,9 @@ export default function Home() {
             }
             sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
         }
-        
     }
 
-    return ( <>
+    return (
          <div className="container-login">
             <Image src={badminton} alt="badminton" style={{ marginTop: 50, width: '100px' }} />
             <br />
@@ -108,6 +97,5 @@ export default function Home() {
                 </ModalContent>
             </Modal>
         </div>
-    </>
     );
 }
