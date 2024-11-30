@@ -42,7 +42,7 @@ export default function Home() {
     }
 
     return ( <>
-    {dataUser ? router.push(`home/${dataUser.uuid}`) : <div className="container-login">
+         <div className="container-login">
             <Image src={badminton} alt="badminton" style={{ marginTop: 50, width: '100px' }} />
             <br />
             <h1 >Q-Team</h1>
@@ -108,7 +108,7 @@ export default function Home() {
 
                 </ModalContent>
             </Modal>
-        </div>}
+        </div>
     </>
         
     );
