@@ -15,10 +15,7 @@ import emptyPlayerList from '../../../image/emptyPlayerList.png'
 import { AddNewTeam, DeleteAllData, DeleteTeam, GetdataListQueues, UpdateTeamWin } from './service'
 
 const Homepage = () => {
-    let isLogin: any = sessionStorage.getItem('userInfo')
-    if (isLogin) {
-        isLogin = JSON.parse(isLogin)
-    }
+    const isLogin = JSON.parse(sessionStorage.getItem('userInfo')|| '')
     const [teamOnePlaying, setTeamOnePlaying] = useState<PlayerTeam>()
     const [teamTwoPlaying, setTeamTwoPlaying] = useState<PlayerTeam>()
     const [awaitingTeamList, setAwaitingTeamList] = useState<PlayerTeam[]>([])
