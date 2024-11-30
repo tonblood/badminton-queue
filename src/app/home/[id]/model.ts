@@ -1,6 +1,13 @@
 export interface PlayerTeam {
-    id: string
+    id?: string
     firstPlayer: string
     secondPlayer: string
-    winCount: number
+    winCount?: number
+    update_by: string
+}
+
+export interface ListAllPlayer {
+    teamOnePlay?: PlayerTeam
+    teamTwoPlay?: PlayerTeam
+    teamQueueList?: PlayerTeam[]
 }

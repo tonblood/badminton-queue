@@ -7,132 +7,92 @@ import { Accordion, AccordionItem, Button, Card, Divider, Input, Modal, ModalCon
 import { BiDownArrow } from 'react-icons/bi'
 import TeamPlayNow from './TeamPlayNow'
 import versusImage from '../../../image/versus-image.png'
-import { PlayerTeam } from './model'
+import { ListAllPlayer, PlayerTeam } from './model'
 import { RiContactsBook3Line } from 'react-icons/ri'
 import { makeid } from '@/app/component/makeId'
 import { MdDeleteOutline } from 'react-icons/md'
 import emptyPlayerList from '../../../image/emptyPlayerList.png'
+import { AddNewTeam, DeleteAllData, DeleteTeam, GetdataListQueues, UpdateTeamWin } from './service'
 
 const Homepage = () => {
-    let isLogin = sessionStorage.getItem('userInfo') !== null
+    let isLogin: any = sessionStorage.getItem('userInfo')
+    if (isLogin) {
+        isLogin = JSON.parse(isLogin)
+    }
     const [teamOnePlaying, setTeamOnePlaying] = useState<PlayerTeam>()
     const [teamTwoPlaying, setTeamTwoPlaying] = useState<PlayerTeam>()
     const [awaitingTeamList, setAwaitingTeamList] = useState<PlayerTeam[]>([])
     const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false)
     const [userOne, setUserOne] = useState<string>('')
     const [userTwo, setUserTwo] = useState<string>('')
-    const [isLoadingOne, setIsLoadingOne] = useState<boolean>(false)
-    const [isLoadingTwo, setIsLoadingTwo] = useState<boolean>(false)
-    const [isLoadingTeamList, setIsLoadingTeamList] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const router = useRouter()
 
     useEffect(() => {
-        setIsLoadingOne(true)
-        setIsLoadingTwo(true)
-        setIsLoadingTeamList(true)
-        if (sessionStorage.getItem('teamOne') !== null && sessionStorage.getItem('teamOne') !== 'undefined') {
-            const tempdata = JSON.parse(sessionStorage.getItem('teamOne')!!)
-            setTeamOnePlaying(tempdata)
-        }
-        if (sessionStorage.getItem('teamTwo') !== null && sessionStorage.getItem('teamTwo') !== 'undefined') {
-            setTeamTwoPlaying(JSON.parse(sessionStorage.getItem('teamTwo') || ''))
-        }
-        if (sessionStorage.getItem('awaitingTeam') !== null) {
-            setAwaitingTeamList(JSON.parse(sessionStorage.getItem('awaitingTeam') || ''))
-        }
-        setTimeout(() => setIsLoadingOne(false), 1000)
-        setTimeout(() => setIsLoadingTwo(false), 1000)
-        setTimeout(() => setIsLoadingTeamList(false), 1000)
+        setIsLoading(true)
+        GetdataListQueues().then((res: ListAllPlayer) => {
+            setTeamOnePlaying(res.teamOnePlay)
+            setTeamTwoPlaying(res.teamTwoPlay)
+            setAwaitingTeamList(res.teamQueueList || [])
+        }).finally(() => setIsLoading(false))
     }, [])
+
+    // const getDataList = () => {
+    //     GetdataListQueues().then((res: ListAllPlayer) => {
+    //         setTeamOnePlaying(res.teamOnePlay)
+    //         setTeamTwoPlaying(res.teamTwoPlay)
+    //         setAwaitingTeamList(res.teamQueueList || [])
+    //     }).finally(() => setIsLoading(false))
+    // }
 
     const handleSubmitTeam = () => {
         if (userOne?.trim() && userTwo?.trim()) {
-            const uuid = makeid(4)
             const convertData: PlayerTeam = {
-                id: uuid,
                 firstPlayer: userOne,
                 secondPlayer: userTwo,
-                winCount: 0
+                update_by: isLogin.name
             }
-            if (!teamOnePlaying) {
-                setIsLoadingOne(true)
-                setTimeout(() => setIsLoadingOne(false), 1000)
-                setTeamOnePlaying(convertData)
-                sessionStorage.setItem('teamOne', JSON.stringify(convertData))
-            } else if (!teamTwoPlaying) {
-                setIsLoadingTwo(true)
-                setTimeout(() => setIsLoadingTwo(false), 1000)
-                setTeamTwoPlaying(convertData)
-                sessionStorage.setItem('teamTwo', JSON.stringify(convertData))
-            } else {
-                setAwaitingTeamList([...awaitingTeamList, convertData])
-                setIsLoadingTeamList(true)
-                setTimeout(() => setIsLoadingTeamList(false), 1000)
-                sessionStorage.setItem('awaitingTeam', JSON.stringify([...awaitingTeamList, convertData]))
-            }
+            setIsLoading(true)
             setIsVisibleModal(false)
-            setUserOne('')
-            setUserTwo('')
+            AddNewTeam(convertData).then((res: ListAllPlayer) => {
+                setTeamOnePlaying(res.teamOnePlay)
+                setTeamTwoPlaying(res.teamTwoPlay)
+                setAwaitingTeamList(res.teamQueueList || [])
+                setUserOne('')
+                setUserTwo('')
+            }).finally(() => setIsLoading(false))
 
         }
     }
-
     const handleCountWin = (id: string, winCount: number) => {
-        const newWinCount = winCount + 1
-        if (newWinCount % 2) {
-            const recentTeam = awaitingTeamList.shift()
-            if (id === teamOnePlaying?.id) {
-                if (teamTwoPlaying) {
-                    teamTwoPlaying.winCount = 0
-                    setAwaitingTeamList([...awaitingTeamList, teamTwoPlaying])
-                    sessionStorage.setItem('awaitingTeam', JSON.stringify([...awaitingTeamList, teamTwoPlaying]))
-                }
-                teamOnePlaying.winCount = newWinCount
-                setTeamTwoPlaying(recentTeam)
-                setIsLoadingTwo(true)
-                setTimeout(() => setIsLoadingTwo(false), 1000)
-                sessionStorage.setItem('teamOne', JSON.stringify(teamOnePlaying))
-                sessionStorage.setItem('teamTwo', JSON.stringify(recentTeam))
-            } else if (id === teamTwoPlaying?.id) {
-                if (teamOnePlaying) {
-                    teamOnePlaying.winCount = 0
-                    setAwaitingTeamList([...awaitingTeamList, teamOnePlaying])
-                    sessionStorage.setItem('awaitingTeam', JSON.stringify([...awaitingTeamList, teamOnePlaying]))
-                }
-                teamTwoPlaying.winCount = newWinCount
-                setTeamOnePlaying(recentTeam)
-                setIsLoadingOne(true)
-                setTimeout(() => setIsLoadingOne(false), 1000)
-                sessionStorage.setItem('teamTwo', JSON.stringify(teamTwoPlaying))
-                sessionStorage.setItem('teamOne', JSON.stringify(recentTeam))
-            }
-        } else {
-            const teamone = awaitingTeamList.shift()
-            const teamtwo = awaitingTeamList.shift()
-            if (teamOnePlaying && teamTwoPlaying) {
-                teamOnePlaying.winCount = 0
-                teamTwoPlaying.winCount = 0
-                setAwaitingTeamList(teamOnePlaying?.id === id ? [...awaitingTeamList, teamTwoPlaying, teamOnePlaying] : [...awaitingTeamList, teamOnePlaying, teamTwoPlaying])
-            }
-            setTeamOnePlaying(teamone)
-            setTeamTwoPlaying(teamtwo)
-            setIsLoadingOne(true)
-            setIsLoadingTwo(true)
-            setTimeout(() => setIsLoadingOne(false), 1000)
-            setTimeout(() => setIsLoadingTwo(false), 1000)
-            sessionStorage.setItem('teamOne', JSON.stringify(teamone))
-            sessionStorage.setItem('teamTwo', JSON.stringify(teamtwo))
-            sessionStorage.setItem('awaitingTeam', JSON.stringify(teamOnePlaying?.id === id ? [...awaitingTeamList, teamTwoPlaying, teamOnePlaying] : [...awaitingTeamList, teamOnePlaying, teamTwoPlaying]))
+        const data = {
+            winCount: winCount + 1,
+            update_by: isLogin.name
         }
-        setIsLoadingTeamList(true)
-        setTimeout(() => setIsLoadingTeamList(false), 1000)
+        setIsLoading(true)
+        UpdateTeamWin(id, data).then((res: ListAllPlayer) => {
+            setTeamOnePlaying(res.teamOnePlay)
+            setTeamTwoPlaying(res.teamTwoPlay)
+            setAwaitingTeamList(res.teamQueueList || [])
+        }).finally(() => setIsLoading(false))
     }
 
     const handleDeleteTeam = (id: string) => {
-        setAwaitingTeamList(awaitingTeamList.filter((it) => it.id !== id))
-        sessionStorage.setItem('awaitingTeam', JSON.stringify(awaitingTeamList.filter((it) => it.id !== id)))
-        setIsLoadingTeamList(true)
-        setTimeout(() => setIsLoadingTeamList(false), 1000)
+        setIsLoading(true)
+        DeleteTeam(id).then((res) => {
+            setTeamOnePlaying(res.teamOnePlay)
+            setTeamTwoPlaying(res.teamTwoPlay)
+            setAwaitingTeamList(res.teamQueueList || [])
+        }).finally(() => setIsLoading(false))
+    }
+
+    const deleteAllData = () => {
+        setIsLoading(true)
+        DeleteAllData().then((res) => {
+            setTeamOnePlaying(res.teamOnePlay)
+            setTeamTwoPlaying(res.teamTwoPlay)
+            setAwaitingTeamList(res.teamQueueList || [])
+        }).finally(() => setIsLoading(false))
     }
 
     return (
@@ -154,22 +114,24 @@ const Homepage = () => {
             <div style={{ padding: '10px 20px' }}>
                 <p>กำลังเล่น...</p>
                 <div className="container-playing-team grid grid-rows-3 mt-2">
-                    {isLoadingOne ? <div className='grid content-center'>
-                        <Spinner label='โปรดรอสักครู่...' />
-                    </div> : <TeamPlayNow teamInfo={teamOnePlaying} handleClickWin={handleCountWin} disabledButton={awaitingTeamList.length === 0} />}
-                    <div className='grid justify-center'>
-                        <Image alt='versus-image' src={versusImage} />
-                    </div>
-                    {isLoadingTwo ? <div className='grid content-center'>
-                        <Spinner label='โปรดรอสักครู่...' />
-                    </div> : <TeamPlayNow teamInfo={teamTwoPlaying} handleClickWin={handleCountWin} disabledButton={awaitingTeamList.length === 0} />}
+                    {isLoading
+                        ? <><div /><div className='grid content-center'>
+                            <Spinner label='โปรดรอสักครู่...' />
+                        </div></>
+                        : <>
+                            <TeamPlayNow isVisible={isLogin.name === 'admin-bad'} teamInfo={teamOnePlaying} handleClickWin={handleCountWin} disabledButton={awaitingTeamList.length < 2} />
+                            <div className='grid justify-center'>
+                                <Image alt='versus-image' src={versusImage} />
+                            </div>
+                            <TeamPlayNow isVisible={isLogin.name === 'admin-bad'} teamInfo={teamTwoPlaying} handleClickWin={handleCountWin} disabledButton={awaitingTeamList.length < 2} />
+                        </>}
                 </div>
                 <div className="grid grid-cols-2 mt-2">
                     <p>ลำดับทีม</p>
                     <p style={{ textAlign: 'end' }}>จำนวน {awaitingTeamList.length} คู่</p>
                 </div>
                 <div className="awaiting-team-containner">
-                    {isLoadingTeamList ? <div className='grid content-center justify-center' style={{ height: '100%' }}>
+                    {isLoading ? <div className='grid content-center justify-center' style={{ height: '100%' }}>
                         <Spinner label='โปรดรอสักครู่...' />
                     </div> : awaitingTeamList.length ? awaitingTeamList.map((it, idx) => {
                         return <div key={it.id}>
@@ -182,9 +144,9 @@ const Homepage = () => {
                                     <h4>{it.firstPlayer} - {it.secondPlayer}</h4>
                                 </div>
                                 <div className='basis-4 grid content-center' style={{ textAlign: 'end' }}>
-                                    <Button isIconOnly variant='light' onClick={() => handleDeleteTeam(it.id)}>
+                                    {isLogin.name === 'admin-bad' ? <Button isIconOnly variant='light' onClick={() => handleDeleteTeam(it.id!!)}>
                                         <MdDeleteOutline fontSize={24} />
-                                    </Button>
+                                    </Button> : null}
                                 </div>
                             </div>
                             <Divider />
@@ -195,8 +157,8 @@ const Homepage = () => {
                     </div>}
                 </div>
                 <div className="flex flex-row">
-                    <Button variant='solid' className='button-primary basis-1/2' onClick={() => { setIsVisibleModal(true) }}>เพิ่มทีมใหม่</Button>
-                    <Button isDisabled variant='bordered' className='button-default basis-1/2'>จัดการทีม</Button>
+                    <Button variant='solid' className='button-primary basis-2/2' onClick={() => { setIsVisibleModal(true) }}>เพิ่มทีมใหม่</Button>
+                    {isLogin.name === 'admin-bad' ? <Button variant='bordered' className='button-default basis-2/2' onClick={deleteAllData}> Clear Data</Button> : null}
                 </div>
 
             </div>
