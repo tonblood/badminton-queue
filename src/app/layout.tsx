@@ -3,7 +3,6 @@ import "./globals.css";
 import { Prompt } from 'next/font/google'
 import { Providers } from "./Provider";
 import 'dotenv/config'
-import { NotificationProvider } from "./context/NotificationContext";
 
 const prompt_font = Prompt({
   subsets: ['thai'],
