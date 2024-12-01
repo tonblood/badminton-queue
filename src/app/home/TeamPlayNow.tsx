@@ -19,7 +19,7 @@ const TeamPlayNow = (props: Props) => {
                     <p>ทีมของ</p>
                     <h4>{props.teamInfo.firstPlayer} - {props.teamInfo.secondPlayer}</h4>
                 </div>
-                <div className="basis-1/5" style={{ textAlign: 'end' }}>
+                <div className="basis-1/5 grid content-center mr-3" style={{ textAlign: 'end' }}>
                     {props.isVisible ? <Button variant='bordered'
                         size='sm'
                         startContent={<Image src={trophy} alt='trophy' />}
@@ -29,7 +29,7 @@ const TeamPlayNow = (props: Props) => {
                         isDisabled={props.disabledButton}
                     >
                         ({props.teamInfo.winCount || 0}/2)
-                    </Button> : null}
+                    </Button> : <div className='grid grid-cols-2 gap-4 content-end'><Image src={trophy} alt='trophy' /><span style={{ color: '#FAAD14'}}>({props.teamInfo.winCount || 0}/2)</span></div>}
                 </div>
             </div>
         </> : <div className='m-3'><p style={{ textAlign: 'center' }}>รอทีมลงแข่ง...</p></div>}
