@@ -51,5 +51,13 @@ export const DeleteAllData = async () => {
     }  
 }
 
-
+export const UpdateTeamData = async (id: string, data: {}) => {
+    try {
+        const response =  await axiosPatch(`/update/${id}`, data)
+        return response.data.data
+    } catch (err) {
+        console.log(err);
+        
+    }  
+}
 

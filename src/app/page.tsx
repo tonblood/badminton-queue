@@ -49,7 +49,7 @@ export default function Home() {
                     <div className="container-login-modal">
                         <Divider style={{ backgroundColor: 'var(--primary-color)', height: 3, width: 40, borderRadius: 8 }} />
                         <h2 style={{ margin: 20 }}>เข้าสู่ระบบ</h2>
-                        <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4 px-2">
+                        <div className="grid grid-cols-1 w-full md:flex-nowrap mb-6 md:mb-0 gap-4 px-2">
                             {/* <Input
                                 type="text"
                                 // label="Email"
