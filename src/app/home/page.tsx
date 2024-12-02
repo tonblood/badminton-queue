@@ -3,16 +3,21 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import badmintonInfo from '../../image/badminton-info.png'
 import Image from 'next/image'
-import { Button, Divider, Input, Modal, ModalContent, Spinner } from '@nextui-org/react'
+import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Modal, ModalBody, ModalContent, ModalHeader, Popover, PopoverContent, PopoverTrigger, Spinner } from '@nextui-org/react'
 import TeamPlayNow from './TeamPlayNow'
 import versusImage from '../../image/versus-image.png'
 import { ListAllPlayer, PlayerTeam } from './model'
 import { RiContactsBook3Line } from 'react-icons/ri'
-import { MdDeleteOutline } from 'react-icons/md'
+import { MdDeleteOutline, MdMore } from 'react-icons/md'
 import emptyPlayerList from '../../image/emptyPlayerList.png'
-import { AddNewTeam, DeleteAllData, DeleteTeam, GetdataListQueues, UpdateTeamWin } from './service'
+import { AddNewTeam, DeleteAllData, DeleteTeam, GetdataListQueues, UpdateTeamData, UpdateTeamWin } from './service'
+import { CgMoreVertical, CgMoreVerticalAlt } from 'react-icons/cg';
+import { BiEditAlt } from 'react-icons/bi';
+import { FiAtSign, FiEdit } from 'react-icons/fi';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 const Homepage = () => {
+    const router = useRouter()
     const [teamOnePlaying, setTeamOnePlaying] = useState<PlayerTeam>()
     const [teamTwoPlaying, setTeamTwoPlaying] = useState<PlayerTeam>()
     const [awaitingTeamList, setAwaitingTeamList] = useState<PlayerTeam[]>([])
@@ -20,8 +25,10 @@ const Homepage = () => {
     const [userOne, setUserOne] = useState<string>('')
     const [userTwo, setUserTwo] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const isLogin = typeof window !== "undefined" ? JSON.parse(window.sessionStorage.userInfo) : undefined
-    const router = useRouter()
+    const isLogin = typeof window !== "undefined" ? window.sessionStorage.userInfo ? JSON.parse(window.sessionStorage.userInfo) : router.push('/') : router.push('/')
+    const triggerRef = React.useRef(null);
+    const [iseditUser, setIsEditUser] = useState<PlayerTeam| undefined>()
+    const [isVisibleModalDelete, setIsVisibleModalDelete] = useState<boolean>(false)
 
     useEffect(() => {
         setIsLoading(true)
@@ -31,7 +38,7 @@ const Homepage = () => {
             setAwaitingTeamList(res.teamQueueList || [])
         }).finally(() => setIsLoading(false))
     }, [])
-    
+
     // const getDataList = () => {
     //     GetdataListQueues().then((res: ListAllPlayer) => {
     //         setTeamOnePlaying(res.teamOnePlay)
@@ -49,14 +56,23 @@ const Homepage = () => {
             }
             setIsLoading(true)
             setIsVisibleModal(false)
-            AddNewTeam(convertData).then((res: ListAllPlayer) => {
-                setTeamOnePlaying(res.teamOnePlay)
-                setTeamTwoPlaying(res.teamTwoPlay)
-                setAwaitingTeamList(res.teamQueueList || [])
-                setUserOne('')
-                setUserTwo('')
-            }).finally(() => setIsLoading(false))
-
+            if (iseditUser) {
+                UpdateTeamData(iseditUser.id!!, convertData).then((res: ListAllPlayer) => {
+                    setTeamOnePlaying(res.teamOnePlay)
+                    setTeamTwoPlaying(res.teamTwoPlay)
+                    setAwaitingTeamList(res.teamQueueList || [])
+                    setUserOne('')
+                    setUserTwo('')
+                }).finally(() => setIsLoading(false))
+            } else {
+                AddNewTeam(convertData).then((res: ListAllPlayer) => {
+                    setTeamOnePlaying(res.teamOnePlay)
+                    setTeamTwoPlaying(res.teamTwoPlay)
+                    setAwaitingTeamList(res.teamQueueList || [])
+                    setUserOne('')
+                    setUserTwo('')
+                }).finally(() => setIsLoading(false))
+            }
         }
     }
     const handleCountWin = (id: string, winCount: number) => {
@@ -72,13 +88,14 @@ const Homepage = () => {
         }).finally(() => setIsLoading(false))
     }
 
-    const handleDeleteTeam = (id: string) => {
+    const handleDeleteTeam = () => {
         setIsLoading(true)
-        DeleteTeam(id).then((res) => {
+        DeleteTeam(iseditUser?.id!!).then((res) => {
             setTeamOnePlaying(res.teamOnePlay)
             setTeamTwoPlaying(res.teamTwoPlay)
             setAwaitingTeamList(res.teamQueueList || [])
         }).finally(() => setIsLoading(false))
+        setIsVisibleModalDelete(false)
     }
 
     const deleteAllData = () => {
@@ -88,6 +105,26 @@ const Homepage = () => {
             setTeamTwoPlaying(res.teamTwoPlay)
             setAwaitingTeamList(res.teamQueueList || [])
         }).finally(() => setIsLoading(false))
+    }
+
+    const handleEditData = (teamData: PlayerTeam) => {
+        setIsEditUser(teamData)
+        setUserOne(teamData.firstPlayer)
+        setUserTwo(teamData.secondPlayer)
+        setIsVisibleModal(true)
+    }
+
+    const handleCloseModalAdd = () => {
+        setIsVisibleModal(false)
+        setIsEditUser(undefined)
+        setUserOne('')
+        setUserTwo('')
+        setIsVisibleModalDelete(false)
+    }
+
+    const handleDeleteData = (teamData: PlayerTeam) => {
+        setIsEditUser(teamData)
+        setIsVisibleModalDelete(true)
     }
 
     return (
@@ -139,9 +176,25 @@ const Homepage = () => {
                                     <h4>{it.firstPlayer} - {it.secondPlayer}</h4>
                                 </div>
                                 <div className='basis-4 grid content-center' style={{ textAlign: 'end' }}>
-                                    {isLogin.name === 'admin-bad' ? <Button isIconOnly variant='light' onClick={() => handleDeleteTeam(it.id!!)}>
-                                        <MdDeleteOutline fontSize={24} />
-                                    </Button> : null}
+                                    {isLogin.name === 'admin-bad' ?
+                                        <Dropdown placement="bottom-end" >
+                                            <DropdownTrigger>
+                                                <Button isIconOnly variant='bordered'>
+                                                    {/* <MdDeleteOutline fontSize={24} /> */}
+                                                    <CgMoreVerticalAlt fontSize={24} color='var(--primary-color)' />
+                                                </Button>
+                                            </DropdownTrigger>
+                                            <DropdownMenu aria-label="Static Actions">
+                                                <DropdownItem onClick={() => handleEditData(it)}
+                                                    endContent={<FiEdit className='basis-2/8 ' fontSize={14} />}>
+                                                    <p className='basis-6/8 mr-10'>แก้ไขข้อมูล</p>
+                                                </DropdownItem>
+                                                <DropdownItem key="delete" className="text-danger" color="danger" onClick={() => handleDeleteData(it)}
+                                                    endContent={<FaSignOutAlt className='basis-2/8' fontSize={14} />}>
+                                                    <p className='basis-6/8 mr-10'>ออกจากคิว</p>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown> : null}
                                 </div>
                             </div>
                             <Divider />
@@ -152,7 +205,7 @@ const Homepage = () => {
                     </div>}
                 </div>
                 <div className="flex flex-row">
-                    <Button variant='solid' className='button-primary basis-2/2' onClick={() => { setIsVisibleModal(true) }}>เพิ่มทีมใหม่</Button>
+                    <Button variant='solid' className='button-primary basis-2/2' onClick={() => { setIsVisibleModal(true); setIsEditUser(undefined); }}>เพิ่มทีมใหม่</Button>
                     {isLogin.name === 'admin-bad' ? <Button variant='bordered' className='button-default basis-2/2' onClick={deleteAllData}> Clear Data</Button> : null}
                 </div>
 
@@ -161,13 +214,13 @@ const Homepage = () => {
             <Modal
                 isOpen={isVisibleModal}
                 placement="center"
-                onClose={() => setIsVisibleModal(false)}
+                onClose={handleCloseModalAdd}
                 hideCloseButton={true}
             >
                 <ModalContent>
                     <div>
-                        <h2 style={{ margin: 20, textAlign: 'center' }}>เพิ่มทีม</h2>
-                        <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4 px-2">
+                        <h2 style={{ margin: 20, textAlign: 'center' }}>{iseditUser ? "แก้ไขข้อมูลทีม" : "เพิ่มทีม"}</h2>
+                        <div className="flex w-full flex-wrap mb-6 md:mb-0 gap-4 px-2">
                             <Input
                                 type="text"
                                 // label="Email"
@@ -181,6 +234,7 @@ const Homepage = () => {
                                 onChange={(e) => { setUserOne(e.target.value) }}
                                 errorMessage="กรุณากรอก ชื่อผู้เล่นคนที่ 1 "
                                 isInvalid={!userOne}
+                                className='basis-full'
                             />
                             <Input
                                 type="text"
@@ -195,8 +249,9 @@ const Homepage = () => {
                                 onChange={(e) => { setUserTwo(e.target.value) }}
                                 errorMessage="กรุณากรอก ชื่อผู้เล่นคนที่ 2 "
                                 isInvalid={!userTwo}
+                                className='basis-full'
                             />
-                            <Button variant='solid' size="md" className="button-primary" onClick={handleSubmitTeam}>ยืนยัน</Button>
+                            <Button variant='solid' size="md" className="button-primary basis-full" onClick={handleSubmitTeam}>ยืนยัน</Button>
                         </div>
 
                         <br />
@@ -204,7 +259,28 @@ const Homepage = () => {
 
                 </ModalContent>
             </Modal>
-        </div> : router.push('/') }</>
+            <Modal
+                isOpen={isVisibleModalDelete}
+                placement="center"
+                onClose={handleCloseModalAdd}
+                hideCloseButton={true}
+            >
+                <ModalContent>
+                    <div>
+                        <ModalHeader className="flex gap-1 content-center"> <FaSignOutAlt fontSize={36} color='red' className='mr-5'/> ออกจากคิว</ModalHeader>
+                        <ModalBody className="flex mb-6 md:mb-0 gap-4 ">
+                            <p>คุณยืนยันการนำทีมของ {iseditUser?.firstPlayer} - {iseditUser?.secondPlayer} <br />ออกจากคิวหรือไม่?</p>
+                        </ModalBody>
+                        <div className="flex ">
+                        <Button variant='bordered' size="md" className="basis-1/2" onClick={handleCloseModalAdd}>ยกเลิก</Button>
+                        <Button variant='solid' size="md" className="button-primary basis-1/2" onClick={handleDeleteTeam}>ยืนยัน</Button>
+                        </div>
+                        <br />
+                    </div>
+
+                </ModalContent>
+            </Modal>
+        </div> : router.push('/')}</>
     )
 }
 
