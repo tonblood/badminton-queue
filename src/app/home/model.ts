@@ -4,6 +4,7 @@ export interface PlayerTeam {
     secondPlayer: string
     winCount?: number
     update_by: string
+    courtId: number
 }
 
 export interface ListAllPlayer {

@@ -9,6 +9,7 @@ type Props = {
     handleClickWin: Function
     disabledButton?: boolean
     isVisible: boolean
+    isPlayedTwoRound?: boolean
 }
 
 const TeamPlayNow = (props: Props) => {
@@ -24,12 +25,12 @@ const TeamPlayNow = (props: Props) => {
                         size='sm'
                         startContent={<Image src={trophy} alt='trophy' />}
                         onClick={() => props.handleClickWin(props.teamInfo?.id, props.teamInfo?.winCount)}
-                        style={{ color: '#FAAD14'}}
+                        style={{ color: '#FAAD14' }}
                         radius='full'
                         isDisabled={props.disabledButton}
                     >
-                        ({props.teamInfo.winCount || 0}/2)
-                    </Button> : <div className='grid grid-cols-2 gap-4 content-end'><Image src={trophy} alt='trophy' /><span style={{ color: '#FAAD14'}}>({props.teamInfo.winCount || 0}/2)</span></div>}
+                        {props.isPlayedTwoRound ? `(${props.teamInfo.winCount || 0}/2)` : null}
+                    </Button> : <div className='grid grid-cols-2 gap-4 content-end'><Image src={trophy} alt='trophy' /><span style={{ color: '#FAAD14' }}>{props.isPlayedTwoRound ? `(${props.teamInfo.winCount || 0}/2)` : null}</span></div>}
                 </div>
             </div>
         </> : <div className='m-3'><p style={{ textAlign: 'center' }}>รอทีมลงแข่ง...</p></div>}
