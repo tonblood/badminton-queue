@@ -15,6 +15,8 @@ import { FiEdit } from 'react-icons/fi';
 import { FaSignOutAlt } from 'react-icons/fa';
 
 import { FaArrowDown } from 'react-icons/fa6';
+import PVP from '../component/PVP';
+import Header from '../component/Header';
 
 const Homepage = () => {
     const router = useRouter()
@@ -133,7 +135,7 @@ const Homepage = () => {
 
     return (
         <> {isLogin ? <div style={{ backgroundColor: '#fbfbfb' }}>
-            <div className="header-containner grid grid-cols-2">
+            {/* <div className="header-containner grid grid-cols-2">
                 <div className="grid grid-gaps-4 grid-rows-2 px-5 py-2">
                     <h2 className='content-end'>Course</h2>
                     <h3 className='content-start'>สนามที่ <span className='ml-3' style={{ color: '#fff', fontSize: 42, fontWeight: 'bold' }}>{courtId}</span></h3>
@@ -141,7 +143,8 @@ const Homepage = () => {
                 <div className="content-end justify-end">
                     <Image src={badmintonInfo} alt="badminton-info" />
                 </div>
-            </div>
+            </div> */}
+            <Header cID={courtId} />
             <div className="grid content-end justify-center" style={{ marginTop: '-30px' }}>
                 <Dropdown placement="bottom" >
                     <DropdownTrigger>
@@ -181,27 +184,29 @@ const Homepage = () => {
             </div>
             <div style={{ padding: '0px 20px' }}>
                 
-                {isLogin.name === `admin-bad-court-${courtId}` ? <div className='flex'>
+                {/* {isLogin.name === `admin-bad-court-${courtId}` ? <div className='flex'>
                     <Button className={`basis1/2 ${isPlayedTwoRound ? 'button-primary' : 'button-default'}`} onClick={() => setIsPlayedTwoRound(true)}>เล่นแบบ 2 เกมออก</Button>
                     <Button className={`basis1/2 ${!isPlayedTwoRound ? 'button-primary' : 'button-default'}`} onClick={() => setIsPlayedTwoRound(false)}>เล่นแบบ 1 เกมออก</Button>
                 </div>
-                : <p>กำลังเล่น...</p>}
-                <div className="container-playing-team grid grid-rows-3 mt-2">
+                : <p>กำลังเล่น...</p>} */}
+                {/* <div className="container-playing-team grid grid-rows-3 mt-2">
                     {isLoading
                         ? <><div /><div className='grid content-center'>
                             <Spinner label='โปรดรอสักครู่...' />
                         </div></>
                         : <>
+                            
                             <TeamPlayNow isVisible={isLogin.name === `admin-bad-court-${courtId}`} teamInfo={teamOnePlaying} handleClickWin={handleCountWin} disabledButton={awaitingTeamList.length < 2} isPlayedTwoRound={isPlayedTwoRound} />
                             <div className='grid justify-center'>
                                 <Image alt='versus-image' src={versusImage} />
                             </div>
                             <TeamPlayNow isVisible={isLogin.name === `admin-bad-court-${courtId}`} teamInfo={teamTwoPlaying} handleClickWin={handleCountWin} disabledButton={awaitingTeamList.length < 2} isPlayedTwoRound={isPlayedTwoRound} />
                         </>}
-                </div>
+                </div> */}
+                <PVP teamOne={teamOnePlaying} teamTwo={teamTwoPlaying} handleClickWin={handleCountWin}/>
                 <div className="grid grid-cols-2 mt-2">
-                    <p>ลำดับทีม</p>
-                    <p style={{ textAlign: 'end' }}>จำนวน {awaitingTeamList.length} คู่</p>
+                    <p style={{paddingLeft:"8px"}}>ลำดับทีม</p>
+                    <p style={{ textAlign: 'end',paddingRight:"8px" }}>จำนวน {awaitingTeamList.length+2} คู่</p>
                 </div>
                 <div className="awaiting-team-containner">
                     {isLoading ? <div className='grid content-center justify-center' style={{ height: '100%' }}>
@@ -210,7 +215,7 @@ const Homepage = () => {
                         return <div key={it.id}>
                             <div className='flex flex-row my-1'>
                                 <div className='basis-6 grid content-center'>
-                                    <p>{idx + 1}</p>
+                                    <p>{idx + 3}</p>
                                 </div>
                                 <div className='basis-5/6'>
                                     <p>ทีมของ : </p>
@@ -245,10 +250,14 @@ const Homepage = () => {
                         <span className='my-5' style={{ textAlign: 'center' }}>ไม่มีทีมต่อคิว</span>
                     </div>}
                 </div>
-                <div className="flex flex-row">
+                <div style={{display:"flex", gap:"16px", paddingTop:"24px", justifyContent: "center"}}>
+                    {isLogin.name === `admin-bad-court-${courtId}` ? <Button style={{width:"100%"}} onClick={deleteAllData} radius="full" variant='bordered' size="lg" className="button-default">ล้างข้อมูล</Button> : null}
+                    <Button style={{width:"100%"}} onClick={() => { setIsVisibleModal(true); setIsEditUser(undefined); }} radius="full" variant='solid' size="lg" className="button-primary">เพิ่มทีม</Button>
+                </div>
+                {/* <div className="flex flex-row">
                     <Button variant='solid' className='button-primary basis-2/2' onClick={() => { setIsVisibleModal(true); setIsEditUser(undefined); }}>เพิ่มทีมใหม่</Button>
                     {isLogin.name === `admin-bad-court-${courtId}` ? <Button variant='bordered' className='button-default basis-2/2' onClick={deleteAllData}> Clear Data</Button> : null}
-                </div>
+                </div> */}
 
             </div>
 

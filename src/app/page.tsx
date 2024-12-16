@@ -11,6 +11,8 @@ import { RiContactsBook3Line } from "react-icons/ri";
 import { Checkbox } from "@nextui-org/checkbox";
 import { useRouter } from "next/navigation";
 import { makeid } from "./component/makeId";
+// import Default_Button from "./component/button";
+import styles from "./styles/button.module.css"
 
 export default function Home() {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
@@ -32,13 +34,17 @@ export default function Home() {
 
     return (
          <div className="container-login">
-            <Image src={badminton} alt="badminton" style={{ marginTop: 50, width: '100px' }} />
+            <Image src={badminton} alt="badminton" style={{ marginTop: 50, width: '186px' }} />
             <br />
             <h1 >Q-Team</h1>
             <p>ระบบจัดเรียงลำดับ <br /> การเล่นแบดมินตันที่ KKU Sports Complex</p>
-            <Button radius="full" variant="solid" size="lg" className="button-primary"><Link href='/register'>ลงทะเบียน</Link></Button>
-            <Button onClick={() => setIsModalVisible(true)} radius="full" variant='bordered' size="lg" className="button-default">เข้าสู่ระบบ</Button>
-
+            <br/>
+            <br/>
+            <div className="Button_Frame">
+                <Button radius="full" variant="solid" size="lg" className="button-disable"><Link href='#'>ลงทะเบียน</Link></Button>
+                <Button onClick={() => setIsModalVisible(true)} radius="full" variant='bordered' size="lg" className="button-default">เข้าสู่ระบบ</Button>
+            </div>
+            
             <Modal
                 isOpen={isModalVisible}
                 placement="bottom-center"
@@ -47,8 +53,8 @@ export default function Home() {
             >
                 <ModalContent>
                     <div className="container-login-modal">
-                        <Divider style={{ backgroundColor: 'var(--primary-color)', height: 3, width: 40, borderRadius: 8 }} />
-                        <h2 style={{ margin: 20 }}>เข้าสู่ระบบ</h2>
+                        <Divider style={{ backgroundColor: 'var(--Secondary-E4C2BB)', height: 6, width: 50, borderRadius: 8 }} />
+                        <h2 style={{ margin: 20, fontSize: "18px", fontWeight: "bold"}}>เข้าสู่ระบบ</h2>
                         <div className="grid grid-cols-1 w-full md:flex-nowrap mb-6 md:mb-0 gap-4 px-2">
                             {/* <Input
                                 type="text"
