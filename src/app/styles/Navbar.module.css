@@ -1,0 +1,25 @@
+/* styles/Navbar.module.css */
+
+.navbar {
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  .navList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .navItem {
+    color: #fff;
+    font-size: 16px;
+  }
+  
+  .navItem a {
+    color: #fff;
+    text-decoration: none;
+  }
+  

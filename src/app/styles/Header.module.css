@@ -1,0 +1,40 @@
+.Frame{
+    width: 100%;
+    /* height: 164px; */
+    background-color: var(--orange-header-background);
+    border-bottom-right-radius: 32px;
+    border-bottom-left-radius: 32px;
+    padding-left: 32px;
+    padding-top: 24px;
+    /* padding-bottom: 20px; */
+    display: flex;
+    /* justify-content: start; */
+    align-items: end;
+}
+.court{
+    gap: 4px;
+    font-size: 24px;
+    font-weight: bold;
+    /* color: var(--super-white); */
+    /* background-color: black; */
+
+    
+}
+
+.Text_Frame{
+    /* flex-direction: row; */
+    display: flex;
+    padding-bottom: 20px;
+    gap: 16px;
+    /* background-color: black; */
+
+    
+
+}
+.Image_Frame{
+    /* display: flex; */
+    /* background-color: black; */
+    margin-left: auto;
+
+    
+}

@@ -1,0 +1,36 @@
+/* components/Modal.module.css */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* ใช้ background ทึบๆ */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* จัดให้ modal อยู่ที่ข้างล่าง */
+    opacity: 0; /* เริ่มต้นเป็นโปร่งใส */
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .modalOverlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .modalContent {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(100%); /* ซ่อน modal ไว้ข้างล่าง */
+    transition: transform 0.3s ease;
+  }
+  
+  .modalOverlay.open .modalContent {
+    transform: translateY(0); /* ให้ modal เลื่อนขึ้น */
+  }
+  
