@@ -39,7 +39,9 @@ export default function PVP(props : Props){
                             <p style={{marginLeft:"8px", color:"#FAAD14", fontSize:"16px", fontWeight: 500}}>ชนะ({props.teamOne?.winCount}/2)</p>
                         </div>
                     </div>
+
                     <div style={{width: "46px"}}> <Image src={VS_ICON} alt="VS_ICON"/> </div>
+                    
                     <div className={styles.Team_Frame}>
                         <div className={styles.Team1}>
                             <div style={{fontSize: "14px", color: "#fff"}}>ทีม :</div>

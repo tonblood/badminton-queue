@@ -1,7 +1,7 @@
 .Frame{
     width: 100%;
     /* height: 164px; */
-    background-color: var(--orange-header-background);
+    background-color: #CC5A3F;
     border-bottom-right-radius: 32px;
     border-bottom-left-radius: 32px;
     padding-left: 32px;

@@ -1,0 +1,41 @@
+.WaitQ_BG{
+    padding: 16px;
+    gap: 8px;
+    height: 368px;
+    background-color: #fff;
+    box-shadow: var(--GrayShadow1);
+    border-width: 1px;
+    border-radius: 16px;
+    border-color: #fafafa;
+}
+
+.teamWait{
+    display: flex;
+    align-items: center;
+    height: 48px;
+    /* background-color: beige; */
+}
+
+.line{
+    height: 1px;
+    flex-grow: 1;
+    background-color: #f2f2f2;
+    margin: 8px 0px 8px 32px;
+}
+
+.teamName{
+    flex-grow: 1;
+}
+
+.mannage{
+    display: flex;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 6px;
+    border-color: #f2f2f2;
+    border-width: 1px;
+    box-shadow: 0 0px 4px rgba(27, 96, 42, 0.08);;
+}

@@ -13,6 +13,11 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        // custom_GD: "var(--Gradient-Button)",
+        disable_Color: "var(--Disable)",
+      },
+      backgroundImage:{
+        custom_GD: "linear-gradient(to bottom,#A83B24,#CC6651)"
       },
     },
   },

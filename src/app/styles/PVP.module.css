@@ -37,8 +37,9 @@
     margin-right: auto; */
     /* background-color: #333; */
     display: flex;
-    /* align-items: center;
-    justify-items: center; */
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
     /* width: 100%; */
     
 }
@@ -49,6 +50,7 @@
     align-items: center;
     margin-bottom: 10px;
     /* justify-content: center; */
+    
 }
 .Win_Button{
     background-color: #fff;
@@ -59,10 +61,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    justify-self: center;
+    /* flex-grow: 1; */
+    /* background-color: #333; */
+
 
 }
 .Team_Frame{
     gap: 16px;
+    flex-grow: 1;
+    /* background-color: #f2f2ff; */
     padding-left: 16px;
     padding-right: 16px;
+    justify-content: center;
+    align-items: center;
+
 }

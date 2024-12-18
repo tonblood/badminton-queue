@@ -12,3 +12,4 @@ export interface ListAllPlayer {
     teamTwoPlay?: PlayerTeam
     teamQueueList?: PlayerTeam[]
 }
+
