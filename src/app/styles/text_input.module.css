@@ -1,3 +1,21 @@
-text_Input{
-    
+.input_Fill{
+    display: flex;
+    align-items: center;
+    border-width: 1px;
+    border-color: #c4c4c4;
+    height: 48px;
+    border-radius: 32px;
+    padding: 8px 12px 8px 16px;
+    gap: 12px;
+}
+
+.input :focus{
+    border-color: #333;
+
+}
+
+.Input{
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }

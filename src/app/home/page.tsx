@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import badmintonInfo from "../../image/badminton-info.png";
 import Image from "next/image";
+import { FaUser } from "react-icons/fa";
+
 import {
   Button,
   Divider,
@@ -41,7 +43,7 @@ import { FaArrowDown } from "react-icons/fa6";
 import PVP from "../component/PVP";
 import Header from "../component/Header";
 import Wait_Q from "../component/Wait_Q";
-import styles from "../styles/text_input.module.css"
+import styles from "../styles/text_input.module.css";
 
 const Homepage = () => {
   const router = useRouter();
@@ -63,6 +65,8 @@ const Homepage = () => {
     useState<boolean>(false);
   const [courtId, setCourtId] = useState<number>(3);
   const [isPlayedTwoRound, setIsPlayedTwoRound] = useState<boolean>(true);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused2, setIsFocused2] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -411,66 +415,150 @@ const Homepage = () => {
             onClose={handleCloseModalAdd}
             hideCloseButton={true}
           >
-            <ModalContent>
-              <div>
-                <h2 style={{ margin: "16px 0px 24px 16px", textAlign: "center", color:"var(--primary-color)", fontSize:"18px", fontWeight:"bold"}}>
-                  {iseditUser ? "แก้ไขข้อมูลทีม" : "เพิ่มทีม"}
-                  <div style={{margin:"8px 0px 0px 8px",fontSize:"16px",color:"#636363",textAlign:"start",fontWeight:"normal"}}> กรณีไม่มีคู่ให้ใส่เครื่องหมาย " - " ที่ชื่อผู้เล่น</div>
-
-                </h2>
-                <div style={{padding:"0px 16px 0px 16px",}}>
-                  <div style={{marginBottom:"24px"}}>
-                  <Input
-                    // className={styles.text_Input}
+            <ModalContent style={{ padding: "16px" }}>
+              <h2
+                style={{
+                  margin: "0px 0px 24px 0px",
+                  textAlign: "center",
+                  color: "var(--primary-color)",
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                }}
+              >
+                {iseditUser ? "แก้ไขข้อมูลทีม" : "เพิ่มทีม"}
+                <div
+                  style={{
+                    margin: "8px 0px 0px 8px",
+                    fontSize: "16px",
+                    color: "#636363",
+                    textAlign: "start",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {" "}
+                  กรณีไม่มีคู่ให้ใส่เครื่องหมาย " - " ที่ชื่อผู้เล่น
+                </div>
+              </h2>
+              <div style={{ gap: "24px", flexGrow: "1" }}>
+                <div
+                  style={{ marginBottom: "24px" }}
+                  className={`flex items-center border-1 rounded-full	 p-2 transition h-12 h-fill pl-4 ${
+                    isFocused
+                      ? "border-Active_Icon_color shadow-[0_4px_2px_rgba(0,0,0,0.1)]"
+                      : "border-default_Icon_color"
+                  }`}
+                >
+                  <FaUser
+                    className={`mr-2 text-lg transition ${
+                      isFocused
+                        ? "text-Active_Icon_color"
+                        : "text-default_Icon_color"
+                    }`}
+                  />
+                  <input
                     type="text"
-                    // label="Email"
-                    placeholder="ชื่อผู้เล่นคนที่ 1 "
-                    labelPlacement="outside"
-                    startContent={<RiContactsBook3Line />}
-                    isRequired
+                    placeholder="กรุณาใส่ชื่อผู้เล่นคนที่ 1"
+                    className="flex-1 focus:outline-none text-text_color"
+                    onFocus={() => setIsFocused(true)} // เมื่อ Input ถูก Focus
+                    onBlur={() => setIsFocused(false)} // เมื่อ Focus หลุดออกจาก Input
                     value={userOne}
+                    // isInvalid={!userOne}
                     onChange={(e) => {
                       setUserOne(e.target.value);
                     }}
-                    // errorMessage="กรุณากรอก ชื่อผู้เล่นคนที่ 1 "
-                    isInvalid={!userOne}
-                    // className="basis-full"
                   />
-                  </div>
-                  <div style={{marginBottom:"24px"}}>
-                  <Input
+                </div>
+
+                <div
+                  style={{ marginBottom: "24px" }}
+                  className={`flex items-center border-1 rounded-full	 p-2 transition h-12 h-fill pl-4 ${
+                    isFocused2
+                      ? "border-Active_Icon_color shadow-[0_4px_2px_rgba(0,0,0,0.1)]"
+                      : "border-default_Icon_color"
+                  }`}
+                >
+                  <FaUser
+                    className={`mr-2 text-lg transition ${
+                      isFocused2
+                        ? "text-Active_Icon_color"
+                        : "text-default_Icon_color"
+                    }`}
+                  />
+                  <input
                     type="text"
-                    // label="Email"
-                    placeholder="ชื่อผู้เล่นคนที่ 2"
-                    labelPlacement="outside"
-                    startContent={<RiContactsBook3Line />}
-                    isRequired
+                    placeholder="กรุณาใส่ชื่อผู้เล่นคนที่ 2"
+                    className="flex-1 focus:outline-none text-text_color"
+                    onFocus={() => setIsFocused2(true)} // เมื่อ Input ถูก Focus
+                    onBlur={() => setIsFocused2(false)} // เมื่อ Focus หลุดออกจาก Input
                     value={userTwo}
+                    // isInvalid={!userTwo}
                     onChange={(e) => {
                       setUserTwo(e.target.value);
                     }}
-                    // errorMessage="กรุณากรอก ชื่อผู้เล่นคนที่ 2 "
-                    isInvalid={!userTwo}
-                    className="basis-full"
                   />
-                  </div>
-                  <Button
-                    style={{borderRadius:"32px", height:"48px", width:"100%"}}
+                </div>
+
+                <Button
+                    style={{
+                      borderRadius: "32px",
+                      height: "48px",
+                      width: "100%",
+                    }}
                     variant="solid"
                     size="md"
                     className={`${
-                        userOne && userTwo
-                          ? "bg-custom_GD text-white cursor-pointer"
-                          : "bg-disable_Color text-white cursor-not-allowed"
-                      }`}
+                      userOne && userTwo
+                        ? "bg-custom_GD text-white cursor-pointer"
+                        : "bg-disable_Color text-white cursor-not-allowed"
+                    }`}
                     onClick={handleSubmitTeam}
                   >
                     ยืนยัน
                   </Button>
-                </div>
+
+
+                {/* <div style={{ padding: "0px 16px 0px 16px" }}> */}
+                  {/* <div style={{ marginBottom: "24px" }}>
+                    <Input
+                      // className={styles.text_Input}
+                      type="text"
+                      // label="Email"
+                      placeholder="ชื่อผู้เล่นคนที่ 1 "
+                      labelPlacement="outside"
+                      startContent={<RiContactsBook3Line />}
+                      isRequired
+                      value={userOne}
+                      onChange={(e) => {
+                        setUserOne(e.target.value);
+                      }}
+                      // errorMessage="กรุณากรอก ชื่อผู้เล่นคนที่ 1 "
+                      isInvalid={!userOne}
+                      // className="basis-full"
+                    />
+                  </div> */}
+
+                  {/* <div style={{ marginBottom: "24px" }}>
+                    <Input
+                      type="text"
+                      // label="Email"
+                      placeholder="ชื่อผู้เล่นคนที่ 2"
+                      labelPlacement="outside"
+                      startContent={<RiContactsBook3Line />}
+                      isRequired
+                      value={userTwo}
+                      onChange={(e) => {
+                        setUserTwo(e.target.value);
+                      }}
+                      // errorMessage="กรุณากรอก ชื่อผู้เล่นคนที่ 2 "
+                      isInvalid={!userTwo}
+                      className="basis-full"
+                    />
+                  </div> */}
+                {/* </div> */}
 
                 <br />
               </div>
+              <div />
             </ModalContent>
           </Modal>
           <Modal

@@ -13,12 +13,16 @@ import { useRouter } from "next/navigation";
 import { makeid } from "./component/makeId";
 // import Default_Button from "./component/button";
 import styles from "./styles/button.module.css";
+import textInput from "./component/text_input";
+import { FaUser } from "react-icons/fa";
+import styles_Input from "./styles/text_input.module.css";
 
 export default function Home() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isPasswordVisible, setisPasswordVisible] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>();
   const router = useRouter();
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleLogin = () => {
     if (userName?.trim) {
@@ -85,7 +89,7 @@ export default function Home() {
             <h2 style={{ margin: 20, fontSize: "18px", fontWeight: "bold" }}>
               เข้าสู่ระบบ
             </h2>
-            <div className="grid grid-cols-1 w-full md:flex-nowrap mb-6 md:mb-0 gap-4 px-2">
+            <div className="grid grid-cols-1 w-full md:flex-nowrap mb-6 md:mb-0 gap-0 px-2">
               {/* <Input
                                 type="text"
                                 // label="Email"
@@ -112,21 +116,81 @@ export default function Home() {
                                 type={isPasswordVisible ? "text" : "password"}
                                 
                             /> */}
-              <Input
+              {/* <Input
                 type="text"
                 // label="Email"
+                className="focus: outline-none placeholder-default_Icon_color text-base focus:text-text_color"
+                style={{ height: "48px" }}
                 placeholder="ชื่อของคุณ"
                 labelPlacement="outside"
-                startContent={<RiContactsBook3Line />}
+                startContent={<FaUser />}
                 isRequired
                 value={userName}
                 onChange={(e) => {
                   setUserName(e.target.value);
                 }}
-              />
-              <Checkbox defaultSelected size="sm" color="warning">
+              /> */}
+              {/* <textInput/> */}
+              <div style={{ gap: "24px" }}>
+                <div style={{ marginBottom: "24px" }}
+                  className={`flex items-center border-1 rounded-full	 p-2 transition h-12 h-fill pl-4 ${
+                    isFocused
+                      ? "border-Active_Icon_color shadow-[0_4px_2px_rgba(0,0,0,0.1)]"
+                      : "border-default_Icon_color"
+                  }`}
+                >
+                  <FaUser
+                    className={`mr-2 text-lg transition ${
+                      isFocused
+                        ? "text-Active_Icon_color"
+                        : "text-default_Icon_color"
+                    }`}
+                  />
+                  <input
+                    type="text"
+                    placeholder="กรุณาใส่ชื่อ"
+                    className="flex-1 focus:outline-none text-text_color"
+                    onFocus={() => setIsFocused(true)} // เมื่อ Input ถูก Focus
+                    onBlur={() => setIsFocused(false)} // เมื่อ Focus หลุดออกจาก Input
+                    value={userName}
+                    onChange={(e) => {
+                      setUserName(e.target.value);
+                    }}
+                  />
+                </div>
+
+                {/* <div
+                  style={{}}
+                  className={`flex items-center border-1 rounded-full	 p-2 transition h-12 h-fill pl-4 ${
+                    isFocused
+                      ? "border-Active_Icon_color shadow-[0_4px_2px_rgba(0,0,0,0.1)]"
+                      : "border-default_Icon_color"
+                  }`}
+                >
+                  <FaUser
+                    className={`mr-2 text-lg transition ${
+                      isFocused
+                        ? "text-Active_Icon_color"
+                        : "text-default_Icon_color"
+                    }`}
+                  />
+                  <input
+                    type="text"
+                    placeholder="กรุณาใส่ชื่อ"
+                    className="flex-1 focus:outline-none text-text_color"
+                    onFocus={() => setIsFocused(true)} // เมื่อ Input ถูก Focus
+                    onBlur={() => setIsFocused(false)} // เมื่อ Focus หลุดออกจาก Input
+                    value={userName}
+                    onChange={(e) => {
+                      setUserName(e.target.value);
+                    }}
+                  />
+                </div> */}
+              </div>
+
+              {/* <Checkbox defaultSelected size="sm" color="warning">
                 ให้ฉันอยู่ในระบบ
-              </Checkbox>
+              </Checkbox> */}
               <Button
                 disabled={!userName}
                 onClick={handleLogin}
@@ -134,11 +198,10 @@ export default function Home() {
                 variant="solid"
                 size="lg"
                 className={`${
-                    userName
-                      ? "bg-custom_GD text-white cursor-pointer"
-                      : "bg-disable_Color text-white cursor-not-allowed"
-                  }`}
-          
+                  userName
+                    ? "bg-custom_GD text-white cursor-pointer"
+                    : "bg-disable_Color text-white cursor-not-allowed"
+                }`}
               >
                 เข้าสู่ระบบ
               </Button>

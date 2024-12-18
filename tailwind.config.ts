@@ -15,6 +15,9 @@ const config: Config = {
         foreground: "var(--foreground)",
         // custom_GD: "var(--Gradient-Button)",
         disable_Color: "var(--Disable)",
+        default_Icon_color: "#c4c4c4",
+        Active_Icon_color: "var(--primary-color)",
+        text_color: "#333",
       },
       backgroundImage:{
         custom_GD: "linear-gradient(to bottom,#A83B24,#CC6651)"
