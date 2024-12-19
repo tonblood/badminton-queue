@@ -34,9 +34,11 @@ export default function PVP(props : Props){
                             <div style={{fontSize: "14px", color: "#fff"}}>ทีม :</div>
                             <div style={{fontSize: "18px", color: "#fff", fontWeight: "bold"}}>{props.teamOne?.firstPlayer} - {props.teamOne?.secondPlayer}</div>
                         </div>
+                        <div style={{padding:"0px 16px 0px 16px"}}>
                         <div className={styles.Win_Button} onClick={()=> {props.handleClickWin(props.teamOne?.id,props.teamOne?.winCount)}}>
                             <Image src={trophy} alt='trophy' />
                             <p style={{marginLeft:"8px", color:"#FAAD14", fontSize:"16px", fontWeight: 500}}>ชนะ({props.teamOne?.winCount}/2)</p>
+                        </div>
                         </div>
                     </div>
 
@@ -47,9 +49,11 @@ export default function PVP(props : Props){
                             <div style={{fontSize: "14px", color: "#fff"}}>ทีม :</div>
                             <div style={{fontSize: "18px", color: "#fff", fontWeight: "bold"}}>{props.teamTwo?.firstPlayer} - {props.teamTwo?.secondPlayer}</div>
                         </div>
-                        <div className={styles.Win_Button} onClick={()=> {props.handleClickWin(props.teamOne?.id,props.teamOne?.winCount)}}>
-                            <Image src={trophy} alt='trophy' />
-                            <p style={{marginLeft:"8px", color:"#FAAD14", fontSize:"16px", fontWeight: 500}}>ชนะ({props.teamTwo?.winCount}/2)</p>
+                        <div style={{padding:"0px 16px 0px 16px"}}>
+                            <div className={styles.Win_Button} onClick={()=> {props.handleClickWin(props.teamOne?.id,props.teamOne?.winCount)}}>
+                                <Image src={trophy} alt='trophy' />
+                                <p style={{marginLeft:"8px", color:"#FAAD14", fontSize:"16px", fontWeight: 500}}>ชนะ({props.teamTwo?.winCount}/2)</p>
+                            </div>
                         </div>
                     </div>
                 </div>

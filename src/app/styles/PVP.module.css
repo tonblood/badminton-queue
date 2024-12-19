@@ -55,7 +55,7 @@
 }
 .Win_Button{
     background-color: #fff;
-    width: 124px;
+    width: 100%;
     height: 42px;
     border-radius: 32px;
     box-shadow: 0 4px 2px rgba(27, 96, 42, 0.02);

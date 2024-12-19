@@ -184,25 +184,6 @@ const Homepage = () => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
   
-    const toggleDropdown = () => {
-      setIsOpen((prev) => !prev);
-    };
-  
-    const handleOptionClick = (option: any) => {
-      console.log("Selected option:", option); // แสดงค่าที่เลือก
-      setIsOpen(false); // ปิด Dropdown หลังจากเลือก
-    };
-  
-    // ปิด Dropdown เมื่อคลิกลอยออกไปข้างนอก
-    useEffect(() => {
-      const handleClickOutside = (event: { target: any; }) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-          setIsOpen(false);
-        }
-      };
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
 
   return (
     <>
