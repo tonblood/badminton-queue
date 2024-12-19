@@ -18,6 +18,8 @@ const config: Config = {
         default_Icon_color: "#c4c4c4",
         Active_Icon_color: "var(--primary-color)",
         text_color: "#333",
+        borderColor: "#f5f5f5",
+        danger: "#D1392B",
       },
       backgroundImage:{
         custom_GD: "linear-gradient(to bottom,#A83B24,#CC6651)"
