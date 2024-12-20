@@ -52,6 +52,8 @@ const Homepage = () => {
   const [teamTwoPlaying, setTeamTwoPlaying] = useState<PlayerTeam>();
   const [awaitingTeamList, setAwaitingTeamList] = useState<PlayerTeam[]>([]);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
+  // const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
   const [userOne, setUserOne] = useState<string>("");
   const [userTwo, setUserTwo] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -181,9 +183,12 @@ const Homepage = () => {
     setIsVisibleModalDelete(true);
   };
 
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef(null);
-  
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  function setIsModalVisible(arg0: boolean): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <>
@@ -283,106 +288,144 @@ const Homepage = () => {
             />
 
             {/* <Wait_Q /> */}
-            
 
             <div>
-                <div style={{ marginTop: "8px", display: "flex", marginBottom: "8px" }}>
-                    <p style={{ paddingLeft: "8px", flexGrow: 1 }}>ลำดับทีม</p>
-                    <p style={{ textAlign: "end", paddingRight: "8px" }}>รอเล่น {awaitingTeamList.length} คู่</p>
-                </div>
-                <div className="bg-white h-[410px] overflow-auto w-full p-4 rounded-2xl shadow-[0_4px_2px_rgba(0,0,0,0.1)] border-borderColor border-1" >
+              <div
+                style={{
+                  marginTop: "8px",
+                  display: "flex",
+                  marginBottom: "8px",
+                }}
+              >
+                <p style={{ paddingLeft: "8px", flexGrow: 1 }}>ลำดับทีม</p>
+                <p style={{ textAlign: "end", paddingRight: "8px" }}>
+                  รอเล่น {awaitingTeamList.length} คู่
+                </p>
+              </div>
+              <div className="bg-white h-[410px] overflow-auto w-full p-4 rounded-2xl shadow-[0_4px_2px_rgba(0,0,0,0.1)] border-borderColor border-1">
                 {isLoading ? (
-                <div
-                  className="grid content-center justify-center"
-                  style={{ height: "100%" }}
-                >
-                  <Spinner label="โปรดรอสักครู่..." />
-                </div>
-              ) : awaitingTeamList.length ? (
-                awaitingTeamList.map((it, idx) => {
-                  return (
-                    <div key={it.id}>
-                      <div className="flex flex-row h-[48px] mb-[0px]">
-                        <div className="basis-6 grid content-center mr-4">
-                          <p style={{
-                            justifySelf: "center",
-                            color: "var(--primary-color)",
-                            fontWeight: "bold",
-                            fontSize: "16px",
-                            }}>{idx + 3}
+                  <div
+                    className="grid content-center justify-center"
+                    style={{ height: "100%" }}
+                  >
+                    <Spinner label="โปรดรอสักครู่..." />
+                  </div>
+                ) : awaitingTeamList.length ? (
+                  awaitingTeamList.map((it, idx) => {
+                    return (
+                      <div key={it.id}>
+                        <div className="flex flex-row h-[48px] mb-[0px]">
+                          <div className="basis-6 grid content-center mr-4">
+                            <p
+                              style={{
+                                justifySelf: "center",
+                                color: "var(--primary-color)",
+                                fontWeight: "bold",
+                                fontSize: "16px",
+                              }}
+                            >
+                              {idx + 3}
                             </p>
-                        </div>
-                        
-                        <div className="basis-full">
-                          <p style={{ color: "#989898", fontSize: "12px", marginBottom:"2px" }}>ทีมของ : </p>
-                          <h4 style={{ color: "#333", fontSize: "16px", fontWeight: "bold" }}>
-                            {it.firstPlayer} - {it.secondPlayer}
-                          </h4>
-                        </div>
+                          </div>
 
-                        <div
-                          className="basis-4 grid content-center"
-                          style={{ textAlign: "end" }}
-                        >
-                          {isLogin.name === `admin-bad-court-${courtId}` ? (
-                            <Dropdown placement="bottom-end">
-                              <DropdownTrigger>
-                                <Button isIconOnly variant="bordered" className="w-[24px]">
-                                  {/* <MdDeleteOutline fontSize={24} /> */}
-                                  <CgMoreVerticalAlt
-                                    fontSize={16}
-                                    color="var(--primary-color)"
-                                  />
-                                </Button>
-                              </DropdownTrigger>
+                          <div className="basis-full">
+                            <p
+                              style={{
+                                color: "#989898",
+                                fontSize: "12px",
+                                marginBottom: "2px",
+                              }}
+                            >
+                              ทีมของ :{" "}
+                            </p>
+                            <h4
+                              style={{
+                                color: "#333",
+                                fontSize: "16px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {it.firstPlayer} - {it.secondPlayer}
+                            </h4>
+                          </div>
 
-                              <DropdownMenu aria-label="Static Actions" className="p-[8px]">
-                                <DropdownItem
+                          <div
+                            className="basis-4 grid content-center"
+                            style={{ textAlign: "end" }}
+                          >
+                            {isLogin.name === `admin-bad-court-${courtId}` ? (
+                              <Dropdown placement="bottom-end">
+                                <DropdownTrigger>
+                                  <Button
+                                    isIconOnly
+                                    variant="bordered"
+                                    className="w-[24px]"
+                                  >
+                                    {/* <MdDeleteOutline fontSize={24} /> */}
+                                    <CgMoreVerticalAlt
+                                      fontSize={16}
+                                      color="var(--primary-color)"
+                                    />
+                                  </Button>
+                                </DropdownTrigger>
+
+                                <DropdownMenu
+                                  aria-label="Static Actions"
+                                  className="p-[8px]"
+                                >
+                                  <DropdownItem
                                     className="h-[44px]"
-                                  onClick={() => handleEditData(it)}
-                                  endContent={
-                                    <FiEdit
-                                      className="basis-2/8 text-text_color"
-                                      fontSize={16}
-                                    />
-                                  }
-                                >
-                                  <p className="basis-6/8 text-text_color">แก้ไขข้อมูล</p>
-                                </DropdownItem>
-                                <DropdownItem
-                                  key="delete"
-                                  className="text-danger h-[44px] "
-                                  onClick={() => handleDeleteData(it)}
-                                  endContent={
-                                    <FaSignOutAlt
-                                      className="basis-2/8 text-danger"
-                                      fontSize={16}
-                                    />
-                                  }
-                                >
-                                  <p className="basis-6/8 mr-10 text-danger ">ออกจากคิว</p>
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          ) : null}
+                                    onClick={() => handleEditData(it)}
+                                    endContent={
+                                      <FiEdit
+                                        className="basis-2/8 text-text_color"
+                                        fontSize={16}
+                                      />
+                                    }
+                                  >
+                                    <p className="basis-6/8 text-text_color">
+                                      แก้ไขข้อมูล
+                                    </p>
+                                  </DropdownItem>
+                                  <DropdownItem
+                                    key="delete"
+                                    className="text-danger h-[44px] "
+                                    onClick={() => handleDeleteData(it)}
+                                    endContent={
+                                      <FaSignOutAlt
+                                        className="basis-2/8 text-danger"
+                                        fontSize={16}
+                                      />
+                                    }
+                                  >
+                                    <p className="basis-6/8 mr-10 text-danger ">
+                                      ออกจากคิว
+                                    </p>
+                                  </DropdownItem>
+                                </DropdownMenu>
+                              </Dropdown>
+                            ) : null}
+                          </div>
                         </div>
+                        <div className={styles.line}></div>
                       </div>
-                      <div className={styles.line}></div>
-                    </div>
-                  );
-                })
-              ) : (
-                <div
-                  className="grid content-center justify-center pt-16 pb-12"
-                  style={{ height: "100%" }}
-                >
-                  <Image src={emptyPlayerList} alt="empty player list" />
-                  <span className="my-5 " style={{ textAlign: "center",color:"#636363" }}>
-                    ไม่มีทีมต่อคิว
-                  </span>
-                </div>
-              )}
-                </div>
+                    );
+                  })
+                ) : (
+                  <div
+                    className="grid content-center justify-center pt-16 pb-12"
+                    style={{ height: "100%" }}
+                  >
+                    <Image src={emptyPlayerList} alt="empty player list" />
+                    <span
+                      className="my-5 "
+                      style={{ textAlign: "center", color: "#636363" }}
+                    >
+                      ไม่มีทีมต่อคิว
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
 
             <div
@@ -419,8 +462,6 @@ const Homepage = () => {
                 เพิ่มทีม
               </Button>
             </div>
-            
-
 
             {/* <div className="flex flex-row">
                     <Button variant='solid' className='button-primary basis-2/2' onClick={() => { setIsVisibleModal(true); setIsEditUser(undefined); }}>เพิ่มทีมใหม่</Button>
@@ -428,45 +469,39 @@ const Homepage = () => {
                 </div> */}
           </div>
 
-          <Modal
-            isOpen={isVisibleModal}
-            placement="center"
-            onClose={handleCloseModalAdd}
-            hideCloseButton={true}
-          >
-            <ModalContent style={{ padding: "16px", paddingBottom:"24px"}}>
-              <h2
-                style={{
-                  margin: "0px 0px 24px 0px",
-                  textAlign: "center",
-                  color: "var(--primary-color)",
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                }}
+          <div>
+            {/* Modal */}
+            {isVisibleModal && (
+              <div
+                className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-end"
+                onClick={() => setIsVisibleModal(false)} // ปิด Modal เมื่อคลิกพื้นที่นอกกล่อง
               >
-                {iseditUser ? "แก้ไขข้อมูลทีม" : "เพิ่มทีม"}
                 <div
-                  style={{
-                    margin: "8px 0px 0px 8px",
-                    fontSize: "16px",
-                    color: "#636363",
-                    textAlign: "center",
-                    fontWeight: "normal",
-                  }}
+                  className="w-full h-2/3 max-w-md bg-white rounded-t-[32px] pt-[24px] pr-[16px] pl-[16px] pb-[32px]"
+                  onClick={(e) => e.stopPropagation()} // ป้องกันการปิด Modal เมื่อคลิกในกล่อง
                 >
-                  {" "}
-                  กรณีไม่มีคู่ให้ใส่เครื่องหมาย " - " ที่ชื่อผู้เล่น
-                </div>
-              </h2>
-              <div style={{ gap: "24px", flexGrow: "1" }}>
-                <div
-                  style={{ marginBottom: "24px" }}
-                  className={`flex items-center border-1 rounded-full	 p-2 transition h-12 h-fill pl-4 ${
+                  <Divider
+                    style={{
+                      backgroundColor: "var(--Secondary-E4C2BB)",
+                      height: 6,
+                      width: 50,
+                      borderRadius: 8,
+                      justifySelf: "center",
+                      marginBottom: "32px",
+                    }}
+                  />
+                  <h2 className="text-center text-[20px] font-bold mb-[24px] text-Active_Icon_color">
+                    {iseditUser ? "แก้ไขข้อมูลทีม" : "เพิ่มทีม"}
+                  </h2>
+
+                  <div
+                    style={{ marginBottom: "24px" }}
+                    className={`flex items-center border-1 rounded-full	 p-2 transition h-12 h-fill pl-4 ${
                     isFocused
                       ? "border-Active_Icon_color shadow-[0_4px_2px_rgba(0,0,0,0.1)]"
                       : "border-default_Icon_color"
-                  }`}
-                >
+                    }`}
+                  >
                   <FaUser
                     className={`mr-2 text-lg transition ${
                       isFocused
@@ -518,68 +553,28 @@ const Homepage = () => {
                 </div>
 
                 <Button
-                    style={{
-                      borderRadius: "32px",
-                      height: "48px",
-                      width: "100%",
-                    }}
-                    variant="solid"
-                    size="md"
-                    className={`${
-                      userOne && userTwo
-                        ? "bg-custom_GD text-white cursor-pointer"
-                        : "bg-disable_Color text-white cursor-not-allowed"
-                    }`}
-                    onClick={handleSubmitTeam}
-                  >
-                    ยืนยัน
-                  </Button>
+                  style={{
+                    borderRadius: "32px",
+                    height: "48px",
+                    width: "100%",
+                  }}
+                  variant="solid"
+                  size="md"
+                  className={`${
+                    userOne && userTwo
+                      ? "bg-custom_GD text-white cursor-pointer"
+                      : "bg-disable_Color text-white cursor-not-allowed"
+                  }`}
+                  onClick={handleSubmitTeam}
+                >
+                  ยืนยัน
+                </Button>
 
-
-                {/* <div style={{ padding: "0px 16px 0px 16px" }}> */}
-                  {/* <div style={{ marginBottom: "24px" }}>
-                    <Input
-                      // className={styles.text_Input}
-                      type="text"
-                      // label="Email"
-                      placeholder="ชื่อผู้เล่นคนที่ 1 "
-                      labelPlacement="outside"
-                      startContent={<RiContactsBook3Line />}
-                      isRequired
-                      value={userOne}
-                      onChange={(e) => {
-                        setUserOne(e.target.value);
-                      }}
-                      // errorMessage="กรุณากรอก ชื่อผู้เล่นคนที่ 1 "
-                      isInvalid={!userOne}
-                      // className="basis-full"
-                    />
-                  </div> */}
-
-                  {/* <div style={{ marginBottom: "24px" }}>
-                    <Input
-                      type="text"
-                      // label="Email"
-                      placeholder="ชื่อผู้เล่นคนที่ 2"
-                      labelPlacement="outside"
-                      startContent={<RiContactsBook3Line />}
-                      isRequired
-                      value={userTwo}
-                      onChange={(e) => {
-                        setUserTwo(e.target.value);
-                      }}
-                      // errorMessage="กรุณากรอก ชื่อผู้เล่นคนที่ 2 "
-                      isInvalid={!userTwo}
-                      className="basis-full"
-                    />
-                  </div> */}
-                {/* </div> */}
-
-                <br />
+                </div>
               </div>
-              <div />
-            </ModalContent>
-          </Modal>
+            )}
+          </div>
+
           <Modal
             isOpen={isVisibleModalDelete}
             placement="center"
@@ -595,24 +590,31 @@ const Homepage = () => {
                     color="white"
                     className="bg-danger p-[8px] rounded-[8px]"
                   />{" "}
-                  <div style={{alignSelf:"center"}}>ออกจากคิว</div>
+                  <div style={{ alignSelf: "center" }}>ออกจากคิว</div>
                 </ModalHeader>
+                
                 <ModalBody className="flex content-center border-b">
-                    <p className="flex text-16 pt-[16px] pb-[0px] text-text_color">
-                        คุณยืนยันการนำ <div className="text-16 font-bold text-Active_Icon_color ml-[4px]">ทีมของ {iseditUser?.firstPlayer} -{" "}
-                        {iseditUser?.secondPlayer} </div>
-                    </p>
-                    <div className="pb-[16px] text-text_color">ออกจากคิวหรือไม่?</div>
+                  <p className="flex text-16 pt-[16px] pb-[0px] text-text_color">
+                    คุณยืนยันการนำ{" "}
+                    <div className="text-16 font-bold text-Active_Icon_color ml-[4px]">
+                      ทีมของ {iseditUser?.firstPlayer} -{" "}
+                      {iseditUser?.secondPlayer}{" "}
+                    </div>
+                  </p>
+                  <div className="pb-[16px] text-text_color">
+                    ออกจากคิวหรือไม่?
+                  </div>
                 </ModalBody>
-                <div style={{
+                <div
+                  style={{
                     display: "flex",
                     gap: "16px",
                     justifyContent: "center",
-                    padding: "24px 16px 0px 16px"
-                    }}>
-                
+                    padding: "24px 16px 0px 16px",
+                  }}
+                >
                   <Button
-                    style={{width:"100%"}}
+                    style={{ width: "100%" }}
                     radius="full"
                     variant="bordered"
                     size="md"
@@ -622,7 +624,7 @@ const Homepage = () => {
                     ยกเลิก
                   </Button>
                   <Button
-                    style={{width:"100%"}}
+                    style={{ width: "100%" }}
                     radius="full"
                     variant="solid"
                     size="md"
