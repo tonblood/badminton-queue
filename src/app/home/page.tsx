@@ -616,7 +616,7 @@ const Homepage = () => {
                   <Button
                     style={{ width: "100%" }}
                     radius="full"
-                    variant="bordered"
+                    variant="ghost"
                     size="md"
                     className="button-default"
                     onClick={handleCloseModalAdd}
