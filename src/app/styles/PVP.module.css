@@ -1,0 +1,81 @@
+.frame1{
+    display: flex;
+    background-color: #f2f2ff;
+    height: 300px;
+    padding: 16px;
+
+}
+
+.BG{
+    /* background-color: #CC5A3F; */
+    display: flex;
+    background-image: linear-gradient(275deg, #64291B, #CC5A3F);
+    height: 130px;
+    width: 100%;
+    border-radius: 16px;
+    flex-direction: row;
+    margin-top: 16px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+.Props1{
+    position: absolute;
+    left: 20px;
+}
+.Props2{
+    position: absolute;
+    /* background-color: #f2f2ff; */
+    right: 20px;
+    /* top: 50%; */
+    /* transform: translate(-50%); */
+}
+
+.VS_Frame{
+    /* position: absolute; */
+    margin: 16px;
+    /* margin-left: auto;
+    margin-right: auto; */
+    /* background-color: #333; */
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
+    
+}
+
+.Team1{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    /* background-color: #333; */
+    /* justify-content: center; */
+    
+}
+.Win_Button{
+    background-color: #fff;
+    width: 124px;
+    height: 42px;
+    border-radius: 32px;
+    box-shadow: 0 4px 2px rgba(27, 96, 42, 0.02);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    /* flex-grow: 1; */
+    /* background-color: #333; */
+    padding: 5px;
+
+
+}
+.Team_Frame{
+    gap: 16px;
+    flex-grow: 1;
+    /* background-color: #f2f2ff; */
+    /* padding-left: 16px;
+    padding-right: 16px; */
+    justify-content: center;
+    align-items: center;
+
+}

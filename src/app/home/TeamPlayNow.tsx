@@ -3,6 +3,7 @@ import React from 'react'
 import trophy from '../../image/trophy.png'
 import Image from 'next/image'
 import { PlayerTeam } from './model'
+import PVP from "../component/PVP"
 
 type Props = {
     teamInfo?: PlayerTeam
@@ -19,6 +20,7 @@ const TeamPlayNow = (props: Props) => {
                 <div className="basis-4/5 grid grid-rows-2">
                     <p>ทีมของ</p>
                     <h4>{props.teamInfo.firstPlayer} - {props.teamInfo.secondPlayer}</h4>
+                
                 </div>
                 <div className="basis-1/5 grid content-center mr-3" style={{ textAlign: 'end' }}>
                     {props.isVisible ? <Button variant='bordered'

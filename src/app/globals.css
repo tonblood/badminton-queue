@@ -11,6 +11,11 @@
   --light-orange: #F2E2DE;
   --super-white: #fff;
   --orange-header-background: #CC5A3F;
+  --Gradient-Button: linear-gradient(to bottom,#A83B24,#CC6651);
+  --Disable: #ccc;
+  --Secondary-E4C2BB: #E4C2BB;
+  --GrayShadow1: 0 4px 2px rgba(27, 96, 42, 0.08);
+
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -28,6 +33,7 @@ body {
 }
 
 body {
+  /* background-color: #fafafa; */
   color: var(--foreground);
   font-family: var(--font-prompt);
   background-size: auto 100%;
@@ -78,20 +84,27 @@ p {
   color: var(--base-color-font);
 }
 
-button {
+/* button {
   margin: 10px;
   width: 100%;
-}
+} */
 
 .button-primary {
   color: var(--white-base);
-  background-color: var(--primary-color);
+  background-image: var(--Gradient-Button);
+  height: 48px;
+}
+.button-disable {
+  color: #fff;
+  background-color: #ccc;
+  height: 48px;
 }
 
 .button-default {
   color: var(--primary-color);
   background-color: #fff;
   border: 1px solid var(--primary-color);
+  height: 48px;
 }
 
 .container-login-modal {
@@ -99,10 +112,12 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  background-color: var(--light-orange);
+  padding: 16px;
+  padding-top: 24px;
+  background-color: var(--super-white);
   color: var(--primary-color);
   padding-bottom: 20%;
+  border-radius: 32px;
 }
 
 .header-containner {
@@ -123,4 +138,12 @@ button {
   background-color: var(--super-white);
   height: 370px;
   overflow-y: auto;
+}
+
+.Button_Frame{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* background-color: #636363; */
+  width: 100%;
 }
