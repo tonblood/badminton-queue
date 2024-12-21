@@ -35,10 +35,13 @@ export default function PVP(props: Props) {
                         <div style={{ fontSize: "18px", color: "#fff", fontWeight: "bold" }}>{props.teamOne?.firstPlayer} - {props.teamOne?.secondPlayer}</div>
                     </div>
                     <div style={{ padding: "0px 16px 0px 16px" }}>
-                        <div className={styles.Win_Button} onClick={() => { props.handleClickWin(props.teamOne?.id, props.teamOne?.winCount) }}>
+                        {props.isVisible ? <div className={styles.Win_Button} onClick={() => { props.handleClickWin(props.teamOne?.id, props.teamOne?.winCount) }}>
                             <Image src={trophy} alt='trophy' />
-                            <p style={{ marginLeft: "8px", color: "#FAAD14", fontSize: "16px", fontWeight: 500}}>ชนะ ({props.teamOne?.winCount || 0}/2)</p>
-                        </div>
+                            <p style={{ marginLeft: "8px", color: "#FAAD14", fontSize: "16px", fontWeight: 500 }}>ชนะ ({props.teamOne?.winCount || 0}/2)</p>
+                        </div> : <div className={styles.Win_Button} style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }} >
+                            <Image src={trophy} alt='trophy' />
+                            <p style={{ marginLeft: "8px", color: "#FAAD14", fontSize: "16px", fontWeight: 500 }}>ชนะ ({props.teamOne?.winCount || 0}/2)</p>
+                        </div>}
                     </div>
                 </div>
 
@@ -50,10 +53,13 @@ export default function PVP(props: Props) {
                         <div style={{ fontSize: "18px", color: "#fff", fontWeight: "bold" }}>{props.teamTwo?.firstPlayer} - {props.teamTwo?.secondPlayer}</div>
                     </div>
                     <div style={{ padding: "0px 16px 0px 16px" }}>
-                        <div className={styles.Win_Button} onClick={() => { props.handleClickWin(props.teamOne?.id, props.teamOne?.winCount) }}>
+                        {props.isVisible ? <div className={styles.Win_Button} onClick={() => { props.handleClickWin(props.teamOne?.id, props.teamOne?.winCount) }}>
                             <Image src={trophy} alt='trophy' />
-                            <p style={{ marginLeft: "8px", color: "#FAAD14", fontSize: "16px", fontWeight: 500}}>ชนะ ({props.teamTwo?.winCount || 0}/2)</p>
-                        </div>
+                            <p style={{ marginLeft: "8px", color: "#FAAD14", fontSize: "16px", fontWeight: 500 }}>ชนะ ({props.teamTwo?.winCount || 0}/2)</p>
+                        </div> : <div className={styles.Win_Button} style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }} >
+                            <Image src={trophy} alt='trophy' />
+                            <p style={{ marginLeft: "8px", color: "#FAAD14", fontSize: "16px", fontWeight: 500 }}>ชนะ ({props.teamTwo?.winCount || 0}/2)</p>
+                        </div>}
                     </div>
                 </div>
             </div>

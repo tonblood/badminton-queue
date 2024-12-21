@@ -247,11 +247,11 @@ const Homepage = () => {
                     </Dropdown>
                 </div>
                 <div style={{ padding: "0px 20px" }}>
-                    {/* {isLogin.name === `admin-bad-court-${courtId}` ? <div className='flex'>
-                    <Button className={`basis1/2 ${isPlayedTwoRound ? 'button-primary' : 'button-default'}`} onClick={() => setIsPlayedTwoRound(true)}>เล่นแบบ 2 เกมออก</Button>
-                    <Button className={`basis1/2 ${!isPlayedTwoRound ? 'button-primary' : 'button-default'}`} onClick={() => setIsPlayedTwoRound(false)}>เล่นแบบ 1 เกมออก</Button>
-                </div>
-                : <p>กำลังเล่น...</p>} */}
+                    {isLogin.name === `admin-bad-court-${courtId}` ? <div className='flex gap-4'>
+                        <Button className={`basis-1/2 ${isPlayedTwoRound ? 'button-primary' : 'button-default'}`} onClick={() => setIsPlayedTwoRound(true)}>เล่นแบบ 2 เกมออก</Button>
+                        <Button className={`basis-1/2 ${!isPlayedTwoRound ? 'button-primary' : 'button-default'}`} onClick={() => setIsPlayedTwoRound(false)}>เล่นแบบ 1 เกมออก</Button>
+                    </div>
+                        : null}
                     {/* <div className="container-playing-team grid grid-rows-3 mt-2">
                     {isLoading
                         ? <><div /><div className='grid content-center'>
@@ -270,6 +270,8 @@ const Homepage = () => {
                         teamOne={teamOnePlaying}
                         teamTwo={teamTwoPlaying}
                         handleClickWin={handleCountWin}
+                        disabledButton={awaitingTeamList.length < 2}
+                        isVisible={isLogin.name === `admin-bad-court-${courtId}`}
                     />
 
                     {/* <Wait_Q /> */}
