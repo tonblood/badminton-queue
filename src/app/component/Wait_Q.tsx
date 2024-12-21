@@ -22,6 +22,7 @@ const Wait_Q = () => {
   // ปิด Dropdown เมื่อคลิกลอยออกไปข้างนอก
   useEffect(() => {
     const handleClickOutside = (event: { target: any; }) => {
+      //@ts-ignore
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
