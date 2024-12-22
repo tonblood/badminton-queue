@@ -75,7 +75,6 @@ const Homepage = () => {
 
     useEffect(() => {
         socket.on("dataResponse", async (res: ListAllPlayer) => {
-            console.log(res);
             setTeamOnePlaying(res.teamOnePlay)
             setTeamTwoPlaying(res.teamTwoPlay)
             setAwaitingTeamList(res.teamQueueList || [])
@@ -147,6 +146,7 @@ const Homepage = () => {
             setAwaitingTeamList(res.teamQueueList || []);
         }).finally(() => setIsLoading(false));
         setIsVisibleModalDelete(false);
+        socket.emit('change', courtId)
     };
 
     const deleteAllData = () => {
@@ -156,6 +156,7 @@ const Homepage = () => {
             setTeamTwoPlaying(res.teamTwoPlay);
             setAwaitingTeamList(res.teamQueueList || []);
         }).finally(() => setIsLoading(false));
+        socket.emit('change', courtId)
     };
 
     const handleEditData = (teamData: PlayerTeam) => {
@@ -272,6 +273,7 @@ const Homepage = () => {
                         handleClickWin={handleCountWin}
                         disabledButton={awaitingTeamList.length < 2}
                         isVisible={isLogin.name === `admin-bad-court-${courtId}`}
+                        isPlayedTwoRound={isPlayedTwoRound}
                     />
 
                     {/* <Wait_Q /> */}
