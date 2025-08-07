@@ -366,6 +366,7 @@ const Homepage = () => {
                                                                 className="p-[8px]"
                                                             >
                                                                 <DropdownItem
+                                                                    key={18}
                                                                     className="h-[44px]"
                                                                     onClick={() => handleEditData(it)}
                                                                     endContent={
@@ -646,7 +647,7 @@ const Homepage = () => {
                                 </ModalHeader>
                             </div>
                             <ModalBody>
-                                <ModalManageQueue awaittingTeamList={awaitingTeamList} setIsVisibleModal={setIsVisibleModalManageQueue} courtId={courtId} setAwatingTeamList={setAwaitingTeamList} setIsLoading={setIsLoading}/>
+                                <ModalManageQueue awaittingTeamList={awaitingTeamList} setIsVisibleModal={setIsVisibleModalManageQueue} courtId={courtId} setAwatingTeamList={setAwaitingTeamList} setIsLoading={setIsLoading} />
                             </ModalBody>
                         </ModalContent>
                     </Modal>
