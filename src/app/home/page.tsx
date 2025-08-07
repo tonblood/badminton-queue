@@ -35,6 +35,8 @@ import PVP from "../component/PVP";
 import Header from "../component/Header";
 import styles from "../styles/Wait_Q.module.css";
 import { io } from "socket.io-client";
+import { BiSort } from "react-icons/bi";
+import ModalManageQueue from "./ModalManageQueue";
 
 const socket = io(process.env.NEXT_PUBLIC_BADMINTON_WEBSOCKET_QUEUE_PLAYER)
 
@@ -62,6 +64,7 @@ const Homepage = () => {
     const [isPlayedTwoRound, setIsPlayedTwoRound] = useState<boolean>(true);
     const [isFocused, setIsFocused] = useState(false);
     const [isFocused2, setIsFocused2] = useState(false);
+    const [isVisibleModalManageQueue, setIsVisibleModalManageQueue] = useState<boolean>(false)
 
     useEffect(() => {
         setIsLoading(true);
@@ -428,13 +431,13 @@ const Homepage = () => {
                         {isLogin.name === `admin-bad-court-${courtId}` ? (
                             <Button
                                 style={{ width: "100%" }}
-                                onClick={deleteAllData}
                                 radius="full"
                                 variant="bordered"
                                 size="lg"
                                 className="button-default"
+                                onClick={() => setIsVisibleModalManageQueue(true)}
                             >
-                                ลบทีมทั้งหมด
+                                จัดลำดับคิว
                             </Button>
                         ) : null}
                         <Button
@@ -622,6 +625,32 @@ const Homepage = () => {
                         </div>
                     </ModalContent>
                 </Modal>
+                {isVisibleModalManageQueue ?
+                    <Modal
+                        isOpen={isVisibleModalManageQueue}
+                        placement="center"
+                        onClose={handleCloseModalAdd}
+                        hideCloseButton={true}
+                    >
+                        <ModalContent>
+                            <div className="pt-[8px]">
+                                <ModalHeader className="flex gap-[8px] h-[80px] border-b font-bold text-[20px] text-text_color p">
+                                    {" "}
+                                    <BiSort
+                                        fontSize={48}
+                                        color="white"
+                                        className="bg-danger p-[8px] rounded-[8px]"
+                                    />{" "}
+                                    <div style={{ alignSelf: "center" }}>จัดลำดับคิว</div>
+
+                                </ModalHeader>
+                            </div>
+                            <ModalBody>
+                                <ModalManageQueue awaittingTeamList={awaitingTeamList} setIsVisibleModal={setIsVisibleModalManageQueue} courtId={courtId} setAwatingTeamList={setAwaitingTeamList} setIsLoading={setIsLoading}/>
+                            </ModalBody>
+                        </ModalContent>
+                    </Modal>
+                    : null}
             </div>
         ) : (
             router.push("/")

@@ -61,3 +61,13 @@ export const UpdateTeamData = async (id: string, court: number, data: {}) => {
     }
 }
 
+export const OrderTeam = async ( court: number, data: {}) => {
+    try {
+        const response = await axiosPatch(`/api/players/order?court=${court}`, data)
+        return response.data.data
+    } catch (err) {
+        console.log(err);
+
+    }
+}
+
