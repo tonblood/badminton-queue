@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { PlayerTeam } from './model'
+import { ListAllPlayer, PlayerTeam } from './model'
 import { SortableContainer, SortableElement, arrayMove } from "react-sortable-hoc";
 import { Button } from '@nextui-org/react';
 import { OrderTeam } from './service';
@@ -41,7 +41,7 @@ const ModalManageQueue = (props: Param) => {
     const SortableList = SortableContainer<{ orders: PlayerTeam[] }>(({ orders }: { orders: PlayerTeam[] }) => {
         return (
             <ul style={{ listStyle: "none" }}>
-                {orders.map((order: PlayerTeam, index: number) => (
+                {orders?.map((order: PlayerTeam, index: number) => (
                     <SortableItem key={order.id} index={index} order={order} />
                 ))}
             </ul>
@@ -52,10 +52,10 @@ const ModalManageQueue = (props: Param) => {
         const data = {
             orders: orders
         }
-        props.setIsVisibleModal(false)
         props.setIsLoading(true)
-        OrderTeam(props.courtId, data).then((res) => {
-            props.setAwatingTeamList(res)
+        props.setIsVisibleModal(false)
+        OrderTeam(props.courtId, data).then((res : ListAllPlayer) => {
+            props.setAwatingTeamList(res.teamQueueList)
         }).finally(() => {
             props.setIsLoading(false)
         })
